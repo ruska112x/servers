@@ -2,17 +2,21 @@ package karabalin;
 
 import java.util.Objects;
 
-public class Group {
+public class Subject {
     private Integer id;
     private String name;
 
-    public Group(Integer id, String name) {
+    public Subject(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
 
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -24,23 +28,23 @@ public class Group {
     }
 
     @Override
-    public String toString() {
-        return "Group{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Group group = (Group) o;
-        return Objects.equals(id, group.id) && Objects.equals(name, group.name);
+        Subject subject = (Subject) o;
+        return Objects.equals(id, subject.id) && Objects.equals(name, subject.name);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, name);
+    }
+
+    @Override
+    public String toString() {
+        return "Subject{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
