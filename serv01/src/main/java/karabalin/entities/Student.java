@@ -1,4 +1,6 @@
-package karabalin;
+package karabalin.entities;
+
+import karabalin.entities.additional.StudentStatus;
 
 import java.util.Objects;
 
@@ -6,7 +8,7 @@ public class Student extends Human {
     private StudentStatus status;
     private Group group;
 
-    public Student(Integer id, String patronymic, String surname, String name, StudentStatus status, Group group) {
+    public Student(Long id, String patronymic, String surname, String name, StudentStatus status, Group group) {
         super(id, patronymic, surname, name);
         this.status = status;
         this.group = group;
@@ -16,16 +18,8 @@ public class Student extends Human {
         return status;
     }
 
-    public void setStatus(StudentStatus status) {
-        this.status = status;
-    }
-
     public Group getGroup() {
         return group;
-    }
-
-    public void setGroup(Group group) {
-        this.group = group;
     }
 
     @Override

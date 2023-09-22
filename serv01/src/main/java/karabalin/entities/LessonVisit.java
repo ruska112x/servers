@@ -1,20 +1,20 @@
-package karabalin;
+package karabalin.entities;
 
 import java.util.List;
 import java.util.Objects;
 
 public class LessonVisit {
-    private Integer id;
+    private Long id;
     private Lesson lesson;
     private List<Student> presentStudents;
 
-    public LessonVisit(Integer id, Lesson lesson, List<Student> presentStudents) {
+    public LessonVisit(Long id, Lesson lesson, List<Student> presentStudents) {
         this.id = id;
         this.lesson = lesson;
         this.presentStudents = presentStudents;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -22,16 +22,8 @@ public class LessonVisit {
         return lesson;
     }
 
-    public void setLesson(Lesson lesson) {
-        this.lesson = lesson;
-    }
-
     public List<Student> getPresentStudents() {
         return presentStudents;
-    }
-
-    public void setPresentStudents(List<Student> presentStudents) {
-        this.presentStudents = presentStudents;
     }
 
     @Override

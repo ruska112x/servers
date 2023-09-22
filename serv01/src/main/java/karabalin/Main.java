@@ -1,19 +1,22 @@
 package karabalin;
 
+import karabalin.entities.*;
+import karabalin.entities.additional.StudentStatus;
+
 import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello, World!");
-        var group = new Group(0, "MMB-104");
-        System.out.println(group);
-        var student = new Student(69, "Handsome", "Kuznetsov", "Alex", StudentStatus.STUDY, group);
-        System.out.println(student);
-        var iliev = new Teacher(1, "Petrovich", "Iliev", "Vicktor");
-        System.out.println(iliev);
-        var discipline = new Subject(0, "MATAH");
-        System.out.println(discipline);
-        var lesson = new Lesson(0, LocalDate.EPOCH, 1, iliev, group);
-        System.out.println(lesson);
+//        var group = new Group(0L, "MMB-104");
+//        System.out.println(group);
+//        var student = new Student(69L, "a", "b", "c", StudentStatus.STUDY, group);
+//        System.out.println(student);
+//        var iliev = new Teacher(1L, "a", "b", "c");
+//        System.out.println(iliev);
+//        var discipline = new Subject(0L, "MATAH");
+//        System.out.println(discipline);
+//        var lesson = new Lesson(0L, LocalDate.EPOCH, 1, iliev, group);
+//        System.out.println(lesson);
     }
 }

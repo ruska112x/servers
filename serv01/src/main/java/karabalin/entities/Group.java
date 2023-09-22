@@ -1,26 +1,22 @@
-package karabalin;
+package karabalin.entities;
 
 import java.util.Objects;
 
 public class Group {
-    private Integer id;
+    private Long id;
     private String name;
 
-    public Group(Integer id, String name) {
+    public Group(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override

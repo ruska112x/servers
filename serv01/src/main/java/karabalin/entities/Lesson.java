@@ -1,16 +1,16 @@
-package karabalin;
+package karabalin.entities;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class Lesson {
-    private Integer id;
+    private Long id;
     private LocalDate date;
     private int numberInSchedule;
     private Teacher teacher;
     private Group group;
 
-    public Lesson(Integer id, LocalDate date, int numberInSchedule, Teacher teacher, Group group) {
+    public Lesson(Long id, LocalDate date, int numberInSchedule, Teacher teacher, Group group) {
         this.id = id;
         this.date = date;
         this.numberInSchedule = numberInSchedule;
@@ -18,7 +18,7 @@ public class Lesson {
         this.group = group;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -26,32 +26,16 @@ public class Lesson {
         return date;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
     public int getNumberInSchedule() {
         return numberInSchedule;
-    }
-
-    public void setNumberInSchedule(int numberInSchedule) {
-        this.numberInSchedule = numberInSchedule;
     }
 
     public Teacher getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
-    }
-
     public Group getGroup() {
         return group;
-    }
-
-    public void setGroup(Group group) {
-        this.group = group;
     }
 
     @Override
