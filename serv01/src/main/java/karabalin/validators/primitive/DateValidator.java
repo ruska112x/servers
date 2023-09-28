@@ -1,4 +1,4 @@
-package karabalin.validators;
+package karabalin.validators.primitive;
 
 import java.text.DateFormat;
 import java.text.ParseException;

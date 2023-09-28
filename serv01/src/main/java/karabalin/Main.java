@@ -1,10 +1,6 @@
 package karabalin;
 
-import karabalin.entities.*;
-import karabalin.entities.additional.StudentStatus;
-import karabalin.validators.DateValidator;
-
-import java.time.LocalDate;
+import karabalin.validators.primitive.DateValidator;
 
 public class Main {
     public static void main(String[] args) {

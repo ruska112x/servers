@@ -1,4 +1,4 @@
-package karabalin.validators;
+package karabalin.validators.primitive;
 
 public class LongValidator {
 
