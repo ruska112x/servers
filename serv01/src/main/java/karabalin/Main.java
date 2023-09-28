@@ -2,6 +2,7 @@ package karabalin;
 
 import karabalin.entities.*;
 import karabalin.entities.additional.StudentStatus;
+import karabalin.validators.DateValidator;
 
 import java.time.LocalDate;
 
@@ -18,5 +19,8 @@ public class Main {
 //        System.out.println(discipline);
 //        var lesson = new Lesson(0L, LocalDate.EPOCH, 1, iliev, group);
 //        System.out.println(lesson);
+
+        var res = DateValidator.validateRegEx("30.02.2023");
+        System.out.println(res);
     }
 }
