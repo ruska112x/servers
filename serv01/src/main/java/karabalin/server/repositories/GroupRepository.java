@@ -2,7 +2,7 @@ package karabalin.server.repositories;
 
 import java.util.List;
 
-public interface Repository<T, U extends List<T>> {
+public interface GroupRepository<T, U extends List<T>> {
 
     Long add(T t);
 

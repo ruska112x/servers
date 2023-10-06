@@ -20,6 +20,9 @@ public class ResponseEntity<T> {
 
 
     // TODO commonResponse<t>, exceptions
+    // commonResponse<T> contains response<t>
+    // and flag about succession
+    // and List<String> of exceptions and errors
     public Long getHttpStatus() {
         return httpStatus;
     }

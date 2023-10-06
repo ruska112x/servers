@@ -6,16 +6,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GroupsRepository implements Repository<Group, List<Group>> {
+public class GroupsGroupRepository implements GroupRepository<Group, List<Group>> {
 
 
-    // TODO interface and DB class
-    private final Map<Long, Group> repo;
+    // TODO interface
+    private Map<Long, Group> repo;
 
     private Long currentId = 1L;
 
-    public GroupsRepository() {
-        repo = new HashMap<>();
+    public GroupsGroupRepository(DataBase dataBase) {
+        this.repo = dataBase.getGroupsTable();
     }
 
     @Override
