@@ -1,14 +1,43 @@
 package karabalin.server.repositories;
 
+import karabalin.server.entities.Group;
+import karabalin.server.repositories.interfaces.IGroupRepository;
+
 import java.util.List;
+import java.util.Map;
 
-public interface GroupRepository<T, U extends List<T>> {
+public class GroupRepository implements IGroupRepository<Long, Group, List<Group>> {
+    private Map<Long, Group> repo;
 
-    Long add(T t);
+    private Long currentId = 1L;
 
-    void update(T t);
-    void deleteById(Long id);
-    T getById(Long id);
+    public GroupRepository(DataBase dataBase) {
+        this.repo = dataBase.getGroupsTable();
+    }
 
-    U getAll();
+    @Override
+    public Long add(Group group) {
+        repo.put(currentId, new Group(currentId, group.getName()));
+        return currentId++;
+    }
+
+    @Override
+    public void update(Group group) {
+        repo.put(group.getId(), group);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        repo.remove(id);
+    }
+
+    @Override
+    public Group getById(Long id) {
+        return repo.get(id);
+    }
+
+    @Override
+    public List<Group> getAll() {
+        return repo.values().stream().toList();
+    }
 }

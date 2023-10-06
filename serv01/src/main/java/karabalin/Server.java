@@ -1,5 +1,6 @@
 package karabalin;
 
+import karabalin.server.exceptions.ServiceException;
 import karabalin.server.repositories.DataBase;
 import karabalin.server.services.GroupService;
 import karabalin.server.controllers.GroupController;
