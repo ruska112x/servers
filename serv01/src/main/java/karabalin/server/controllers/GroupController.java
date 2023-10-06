@@ -45,7 +45,7 @@ public class GroupController {
     public ResponseEntity<Long> addStudentGroup(AddStudentGroupRequest addStudentGroupRequest) {
         ResponseEntity<Long> response;
         if (addStudentGroupValidator.validate(addStudentGroupRequest).isEmpty()) {
-            response = new ResponseEntity<>(groupService.addGroup(addStudentGroupRequest.getName()));
+            response = new ResponseEntity<>(groupService.addGroup(addStudentGroupRequest.getName()), 201L);
         } else {
             response = new ResponseEntity<>(null, 422L);
         }
@@ -57,7 +57,7 @@ public class GroupController {
         if (editStudentGroupValidator.validate(editStudentGroupRequest).isEmpty()) {
             try {
                 response = new ResponseEntity<>(groupService.updateGroup(new Group(editStudentGroupRequest.getId(),
-                        editStudentGroupRequest.getName())).getId());
+                        editStudentGroupRequest.getName())).getId(), 200L);
             } catch (ServiceException e) {
                 throw new RuntimeException(e);
             }
@@ -71,13 +71,13 @@ public class GroupController {
         ResponseEntity<Long> response;
         if (idRequestValidator.validate(idRequest).isEmpty()) {
             try {
-                response = new ResponseEntity<>(groupService.deleteGroup(idRequest.getId()));
+                response = new ResponseEntity<>(groupService.deleteGroup(idRequest.getId()), 200L);
             } catch (ServiceException e) {
                 throw new RuntimeException(e);
             }
         } else {
             response = new ResponseEntity<>(null, 422L);
         }
-        return null;
+        return response;
     }
 }

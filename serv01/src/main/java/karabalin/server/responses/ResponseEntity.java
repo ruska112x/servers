@@ -19,7 +19,7 @@ public class ResponseEntity<T> {
     }
 
 
-    // TODO commonResponse<t>, exceptions
+    // TODO commonResponse<t>
     // commonResponse<T> contains response<t>
     // and flag about succession
     // and List<String> of exceptions and errors

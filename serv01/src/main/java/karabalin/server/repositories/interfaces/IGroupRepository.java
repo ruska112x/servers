@@ -1,14 +1,17 @@
 package karabalin.server.repositories.interfaces;
 
+import karabalin.server.entities.Group;
+import karabalin.server.exceptions.RepositoryException;
+
 import java.util.List;
 
-public interface IGroupRepository<I, T, U extends List<T>> {
+public interface IGroupRepository {
 
-    I add(T t);
+    long add(Group t) throws RepositoryException;
 
-    T update(T t);
-    I deleteById(I id);
-    T getById(Long id);
+    Group update(Group t) throws RepositoryException;
+    void deleteById(long id) throws RepositoryException;
+    Group getById(long id) throws RepositoryException;
 
-    U getAll();
+    List<Group> getAll() throws RepositoryException;
 }

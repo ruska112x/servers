@@ -6,7 +6,7 @@ import karabalin.server.repositories.interfaces.IGroupRepository;
 import java.util.List;
 import java.util.Map;
 
-public class GroupRepository implements IGroupRepository<Long, Group, List<Group>> {
+public class GroupRepository implements IGroupRepository {
     private Map<Long, Group> repo;
 
     private Long currentId = 1L;
@@ -16,7 +16,7 @@ public class GroupRepository implements IGroupRepository<Long, Group, List<Group
     }
 
     @Override
-    public Long add(Group group) {
+    public long add(Group group) {
         repo.put(currentId, new Group(currentId, group.getName()));
         return currentId++;
     }
@@ -27,13 +27,12 @@ public class GroupRepository implements IGroupRepository<Long, Group, List<Group
     }
 
     @Override
-    public Long deleteById(Long id) {
+    public void deleteById(long id) {
         repo.remove(id);
-        return id;
     }
 
     @Override
-    public Group getById(Long id) {
+    public Group getById(long id) {
         return repo.get(id);
     }
 

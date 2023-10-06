@@ -1,18 +1,19 @@
 package karabalin.server.services.interfaces;
 
+import karabalin.server.entities.Group;
 import karabalin.server.exceptions.ServiceException;
 
 import java.util.List;
 
-public interface IGroupService<I, T, U extends List<T>> {
-    I addGroup(String name);
+public interface IGroupService {
+    Long addGroup(String name) throws ServiceException;
 
-    T updateGroup(T t) throws ServiceException;
+    Group updateGroup(Group t) throws ServiceException;
 
-    I deleteGroup(I i) throws ServiceException;
+    long deleteGroup(long i) throws ServiceException;
 
-    T getGroup(I i) throws ServiceException;
+    Group getGroup(long i) throws ServiceException;
 
-    U getGroups() throws ServiceException;
+    List<Group> getGroups() throws ServiceException;
 
 }
