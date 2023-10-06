@@ -24,7 +24,7 @@ public class GroupController {
     }
 
     public ResponseEntity<List<Group>> getStudentGroups() {
-        return null;
+        return new ResponseEntity<>(service.getGroups());
     }
 
     public ResponseEntity<Group> getStudentGroupById(IdRequest idRequest) {
