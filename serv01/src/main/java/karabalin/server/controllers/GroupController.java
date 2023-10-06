@@ -65,6 +65,7 @@ public class GroupController {
 
 
     // TODO переделать все методы под такой тип
+    // ловить любые ислючения
     public ResponseEntity<CommonResponse<Long>> addStudentGroup(AddStudentGroupRequest addStudentGroupRequest) {
         var problems = addStudentGroupValidator.validate(addStudentGroupRequest);
         long status = 200L;
