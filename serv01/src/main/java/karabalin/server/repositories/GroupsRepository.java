@@ -8,6 +8,8 @@ import java.util.Map;
 
 public class GroupsRepository implements Repository<Group, List<Group>> {
 
+
+    // TODO interface and DB class
     private final Map<Long, Group> repo;
 
     private Long currentId = 1L;

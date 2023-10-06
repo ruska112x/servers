@@ -24,7 +24,7 @@ public class GroupController {
     }
 
     public ResponseEntity<List<Group>> getStudentGroups() {
-        return new ResponseEntity<>(service.getGroups());
+        return new ResponseEntity<>(service.getGroups(), 200L);
     }
 
     public ResponseEntity<Group> getStudentGroupById(IdRequest idRequest) {
@@ -32,7 +32,7 @@ public class GroupController {
         if (idRequestValidator.validate(idRequest).isEmpty()) {
             response = new ResponseEntity<>(service.getGroup(idRequest.getId()));
         } else {
-            response = new ResponseEntity<>(null, 500L);
+            response = new ResponseEntity<>(null, 422L);
         }
         return response;
     }
@@ -42,7 +42,7 @@ public class GroupController {
         if (addStudentGroupValidator.validate(addStudentGroupRequest).isEmpty()) {
             response = new ResponseEntity<>(service.addGroup(addStudentGroupRequest.getName()));
         } else {
-            response = new ResponseEntity<>(null, 500L);
+            response = new ResponseEntity<>(null, 422L);
         }
         return response;
     }

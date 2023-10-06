@@ -19,7 +19,7 @@ public class Service {
     public Group getGroup(Long id) {
         return groupsRepository.getById(id);
     }
-
+ // TODO serviceException, interface
     public List<Group> getGroups() {
         return groupsRepository.getAll();
     }

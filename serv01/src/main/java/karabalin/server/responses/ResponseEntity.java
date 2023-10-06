@@ -18,6 +18,8 @@ public class ResponseEntity<T> {
         return body;
     }
 
+
+    // TODO commonResponse<t>, exceptions
     public Long getHttpStatus() {
         return httpStatus;
     }
