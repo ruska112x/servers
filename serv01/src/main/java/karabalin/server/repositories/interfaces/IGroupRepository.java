@@ -6,8 +6,8 @@ public interface IGroupRepository<I, T, U extends List<T>> {
 
     I add(T t);
 
-    void update(T t);
-    void deleteById(Long id);
+    T update(T t);
+    I deleteById(I id);
     T getById(Long id);
 
     U getAll();

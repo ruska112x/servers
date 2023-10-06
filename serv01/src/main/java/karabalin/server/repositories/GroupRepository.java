@@ -22,13 +22,14 @@ public class GroupRepository implements IGroupRepository<Long, Group, List<Group
     }
 
     @Override
-    public void update(Group group) {
-        repo.put(group.getId(), group);
+    public Group update(Group group) {
+        return repo.put(group.getId(), group);
     }
 
     @Override
-    public void deleteById(Long id) {
+    public Long deleteById(Long id) {
         repo.remove(id);
+        return id;
     }
 
     @Override
