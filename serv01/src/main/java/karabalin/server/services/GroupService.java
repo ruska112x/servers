@@ -16,7 +16,7 @@ public class GroupService implements IGroupService {
     }
 
     @Override
-    public Long addGroup(String name) throws ServiceException {
+    public long addGroup(String name) throws ServiceException {
         try {
             return groupsRepository.add(new Group(null, name));
         } catch (RepositoryException e) {

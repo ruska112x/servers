@@ -21,7 +21,5 @@ public class DataBase {
     public DataBase() {
         this.groupsTable = new HashMap<>();
         this.studentsTable = new HashMap<>();
-
-
     }
 }

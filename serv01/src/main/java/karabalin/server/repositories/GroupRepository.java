@@ -23,7 +23,11 @@ public class GroupRepository implements IGroupRepository {
 
     @Override
     public Group update(Group group) {
-        return repo.put(group.getId(), group);
+        if (repo.containsKey(group.getId())) {
+            return repo.put(group.getId(), group);
+        } else {
+            return null;
+        }
     }
 
     @Override
