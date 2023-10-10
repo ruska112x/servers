@@ -14,6 +14,8 @@ import karabalin.server.requests.group.AddStudentGroupRequest;
 import karabalin.server.validators.IdRequestValidator;
 import karabalin.server.validators.group.AddStudentGroupValidator;
 import karabalin.server.validators.group.EditStudentGroupValidator;
+import karabalin.server.validators.primitive.LongValidator;
+import karabalin.server.validators.primitive.StringValidator;
 
 import java.util.List;
 
@@ -23,11 +25,18 @@ public class Server {
         DataBase dataBase = new DataBase();
         GroupRepository groupRepository = new GroupRepository(dataBase);
         GroupService groupService = new GroupService(groupRepository);
-        GroupController groupController = new GroupController(groupService, new AddStudentGroupValidator(), new EditStudentGroupValidator(), new IdRequestValidator());
+        LongValidator longValidator = new LongValidator();
+        StringValidator stringValidator = new StringValidator();
+        GroupController groupController = new GroupController(
+                groupService,
+                new AddStudentGroupValidator(stringValidator),
+                new EditStudentGroupValidator(longValidator, stringValidator),
+                new IdRequestValidator(longValidator));
         groupController.addStudentGroup(new AddStudentGroupRequest("MMB-102"));
         groupController.addStudentGroup(new AddStudentGroupRequest("MMB-103"));
         groupController.addStudentGroup(new AddStudentGroupRequest("MMB-104"));
-        ResponseEntity<CommonResponse<Long>> response = groupController.editStudentGroup(new EditStudentGroupRequest(112L, "MFS-101"));
+        ResponseEntity<CommonResponse<Long>> response = groupController.editStudentGroup(
+                new EditStudentGroupRequest(112L, "MFS-101"));
         ResponseHandler<Long, CommonResponse<Long>> responseHandler = new ResponseHandler<>(response);
         responseHandler.getData();
         ResponseEntity<CommonResponse<List<Group>>> responseGroup = groupController.getStudentGroups();

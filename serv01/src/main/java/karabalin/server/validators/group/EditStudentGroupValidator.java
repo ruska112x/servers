@@ -9,24 +9,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EditStudentGroupValidator implements Validator<EditStudentGroupRequest> {
+
+    private LongValidator longValidator;
+    private StringValidator stringValidator;
+
+    public EditStudentGroupValidator(LongValidator longValidator, StringValidator stringValidator) {
+        this.longValidator = longValidator;
+        this.stringValidator = stringValidator;
+    }
+
     @Override
     public List<String> validate(EditStudentGroupRequest editStudentGroupRequest) {
         var result = new ArrayList<String>();
         var id = editStudentGroupRequest.getId();
         var name = editStudentGroupRequest.getName();
-        if (!LongValidator.notNull(id)) {
+        if (!longValidator.notNull(id)) {
             result.add("Id is null!");
         }
-        if (!LongValidator.moreThanZero(id)) {
+        if (!longValidator.moreThanZero(id)) {
             result.add("Id is less than 0!");
         }
-        if (!StringValidator.notNull(name)) {
+        if (!stringValidator.notNull(name)) {
             result.add("Name is null!");
         }
-        if (!StringValidator.notEmpty(name)) {
+        if (!stringValidator.notEmpty(name)) {
             result.add("Name is empty!");
         }
-        if (!StringValidator.lessThan(name, 255)) {
+        if (!stringValidator.lessThan(name, 255)) {
             result.add("Name is longer than!");
         }
         return result;

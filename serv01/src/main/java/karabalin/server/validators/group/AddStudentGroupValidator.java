@@ -8,17 +8,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddStudentGroupValidator implements Validator<AddStudentGroupRequest> {
+
+    private StringValidator stringValidator;
+
+    public AddStudentGroupValidator(StringValidator stringValidator) {
+        this.stringValidator = stringValidator;
+    }
+
     @Override
     public List<String> validate(AddStudentGroupRequest addStudentGroupRequest) {
         var result = new ArrayList<String>();
         var name = addStudentGroupRequest.getName();
-        if (!StringValidator.notNull(name)) {
+        if (!stringValidator.notNull(name)) {
             result.add("Name is null!");
         }
-        if (!StringValidator.notEmpty(name)) {
+        if (!stringValidator.notEmpty(name)) {
             result.add("Name is empty!");
         }
-        if (!StringValidator.lessThan(name, 255)) {
+        if (!stringValidator.lessThan(name, 255)) {
             result.add("Name is longer than!");
         }
         return result;

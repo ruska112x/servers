@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class DateValidator {
-    public static boolean validateRegEx(String dateString, String pattern) {
+    public boolean validateRegEx(String dateString, String pattern) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
         dateFormat.setLenient(false);
         try {
@@ -14,7 +14,7 @@ public class DateValidator {
         }
         return true;
     }
-    public static boolean validateRegEx(String dateString) {
+    public boolean validateRegEx(String dateString) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         dateFormat.setLenient(false);
         try {
