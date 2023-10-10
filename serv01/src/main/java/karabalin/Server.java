@@ -11,6 +11,9 @@ import karabalin.server.services.GroupService;
 import karabalin.server.controllers.GroupController;
 import karabalin.server.entities.Group;
 import karabalin.server.requests.group.AddStudentGroupRequest;
+import karabalin.server.validators.IdRequestValidator;
+import karabalin.server.validators.group.AddStudentGroupValidator;
+import karabalin.server.validators.group.EditStudentGroupValidator;
 
 import java.util.List;
 
@@ -20,7 +23,7 @@ public class Server {
         DataBase dataBase = new DataBase();
         GroupRepository groupRepository = new GroupRepository(dataBase);
         GroupService groupService = new GroupService(groupRepository);
-        GroupController groupController = new GroupController(groupService);
+        GroupController groupController = new GroupController(groupService, new AddStudentGroupValidator(), new EditStudentGroupValidator(), new IdRequestValidator());
         groupController.addStudentGroup(new AddStudentGroupRequest("MMB-102"));
         groupController.addStudentGroup(new AddStudentGroupRequest("MMB-103"));
         groupController.addStudentGroup(new AddStudentGroupRequest("MMB-104"));

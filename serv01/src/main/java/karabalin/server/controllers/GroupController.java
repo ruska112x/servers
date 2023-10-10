@@ -22,11 +22,11 @@ public class GroupController {
     private EditStudentGroupValidator editStudentGroupValidator;
     private IdRequestValidator idRequestValidator;
 
-    public GroupController(GroupService groupService) {
+    public GroupController(GroupService groupService, AddStudentGroupValidator addStudentGroupValidator, EditStudentGroupValidator editStudentGroupValidator, IdRequestValidator idRequestValidator) {
         this.groupService = groupService;
-        addStudentGroupValidator = new AddStudentGroupValidator();
-        editStudentGroupValidator = new EditStudentGroupValidator();
-        idRequestValidator = new IdRequestValidator();
+        this.addStudentGroupValidator = addStudentGroupValidator;
+        this.editStudentGroupValidator = editStudentGroupValidator;
+        this.idRequestValidator = idRequestValidator;
     }
 
     public ResponseEntity<CommonResponse<List<Group>>> getStudentGroups() {
