@@ -5,6 +5,7 @@ import karabalin.server.repositories.GroupRepository;
 import karabalin.server.requests.IdRequest;
 import karabalin.server.requests.group.EditStudentGroupRequest;
 import karabalin.server.responses.CommonResponse;
+import karabalin.server.responses.ResponseEntity;
 import karabalin.server.services.GroupService;
 import karabalin.server.controllers.GroupController;
 import karabalin.server.entities.Group;
@@ -22,13 +23,19 @@ public class Server {
         groupController.addStudentGroup(new AddStudentGroupRequest("MMB-102"));
         groupController.addStudentGroup(new AddStudentGroupRequest("MMB-103"));
         groupController.addStudentGroup(new AddStudentGroupRequest("MMB-104"));
-        CommonResponse<Long> response = groupController.editStudentGroup(new EditStudentGroupRequest(112L, "MFS-101"));
-        System.out.println(response.getDetails().toString());
-        CommonResponse<List<Group>> responseGroup = groupController.getStudentGroups();
-        System.out.println(responseGroup.getData().getBody().toString());
-        System.out.println(responseGroup.getDetails().toString());
+        ResponseEntity<CommonResponse<Long>> response = groupController.editStudentGroup(new EditStudentGroupRequest(112L, "MFS-101"));
+        if (response.getBody().isSuccess()) {
+            System.out.println(response.getBody().getData().toString());
+        } else {
+            System.out.println(response.getBody().getError());
+            if (response.getBody().getDetails() != null) {
+                System.out.println(response.getBody().getDetails());
+            }
+        }
+        ResponseEntity<CommonResponse<List<Group>>> responseGroup = groupController.getStudentGroups();
+        System.out.println(responseGroup.getBody().getData().toString());
         groupController.deleteStudentGroup(new IdRequest(1L));
         responseGroup = groupController.getStudentGroups();
-        System.out.println(responseGroup.getData().getBody().toString());
+        System.out.println(responseGroup.getBody().getData().toString());
     }
 }

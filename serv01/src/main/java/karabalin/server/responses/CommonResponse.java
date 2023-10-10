@@ -42,4 +42,8 @@ public class CommonResponse<T> {
     public List<String> getDetails() {
         return details;
     }
+
+    public String getError() {
+        return error;
+    }
 }
