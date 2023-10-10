@@ -13,9 +13,11 @@ public class ResponseHandler<T, U extends CommonResponse<T>> {
         if (response.isSuccess()) {
             return response.getData();
         } else {
-            System.out.println(response.getError() == null ? response.getError() : "Error is null");
-            for (String string : response.getDetails()) {
-                System.out.println(string);
+            System.out.println(response.getError() != null ? response.getError() : "Error is null");
+            if (response.getDetails() != null) {
+                for (String string : response.getDetails()) {
+                    System.out.println(string);
+                }
             }
             return null;
         }

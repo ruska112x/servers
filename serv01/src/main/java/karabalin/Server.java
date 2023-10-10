@@ -6,6 +6,7 @@ import karabalin.server.requests.IdRequest;
 import karabalin.server.requests.group.EditStudentGroupRequest;
 import karabalin.server.responses.CommonResponse;
 import karabalin.server.responses.ResponseEntity;
+import karabalin.server.responses.ResponseHandler;
 import karabalin.server.services.GroupService;
 import karabalin.server.controllers.GroupController;
 import karabalin.server.entities.Group;
@@ -24,18 +25,12 @@ public class Server {
         groupController.addStudentGroup(new AddStudentGroupRequest("MMB-103"));
         groupController.addStudentGroup(new AddStudentGroupRequest("MMB-104"));
         ResponseEntity<CommonResponse<Long>> response = groupController.editStudentGroup(new EditStudentGroupRequest(112L, "MFS-101"));
-        if (response.getBody().isSuccess()) {
-            System.out.println(response.getBody().getData().toString());
-        } else {
-            System.out.println(response.getBody().getError());
-            if (response.getBody().getDetails() != null) {
-                System.out.println(response.getBody().getDetails());
-            }
-        }
+        ResponseHandler<Long, CommonResponse<Long>> responseHandler = new ResponseHandler<>(response);
+        responseHandler.getData();
         ResponseEntity<CommonResponse<List<Group>>> responseGroup = groupController.getStudentGroups();
-        System.out.println(responseGroup.getBody().getData().toString());
+        System.out.println(new ResponseHandler<>(responseGroup).getData());
         groupController.deleteStudentGroup(new IdRequest(1L));
         responseGroup = groupController.getStudentGroups();
-        System.out.println(responseGroup.getBody().getData().toString());
+        System.out.println(new ResponseHandler<>(responseGroup).getData());
     }
 }
