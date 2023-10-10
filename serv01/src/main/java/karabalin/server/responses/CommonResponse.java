@@ -16,6 +16,16 @@ public class CommonResponse<T> {
         this.details = details;
     }
 
+    public CommonResponse(String error) {
+        this.success = false;
+        this.error = error;
+    }
+
+    public CommonResponse(List<String> details) {
+        this.success = false;
+        this.details = details;
+    }
+
     public CommonResponse(T data) {
         this.data = data;
         success = true;

@@ -54,7 +54,6 @@ public class GroupService implements IGroupService {
             throw new ServiceException(e.getMessage(), e);
         }
     }
-    // TODO serviceException
 
     @Override
     public List<Group> getGroups() throws ServiceException {

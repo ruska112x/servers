@@ -1,6 +1,5 @@
 package karabalin.server.controllers;
 
-import karabalin.server.exceptions.ServiceException;
 import karabalin.server.responses.CommonResponse;
 import karabalin.server.services.GroupService;
 import karabalin.server.entities.Group;
@@ -30,93 +29,80 @@ public class GroupController {
         idRequestValidator = new IdRequestValidator();
     }
 
-    public CommonResponse<List<Group>> getStudentGroups() {
-        var flag = false;
+    public ResponseEntity<CommonResponse<List<Group>>> getStudentGroups() {
         var problems = new ArrayList<String>();
-        ResponseEntity<List<Group>> response;
+        long status = 200L;
+        CommonResponse<List<Group>> response;
         try {
-            response = new ResponseEntity<>(groupService.getGroups(), 200L);
-        } catch (ServiceException e) {
-            problems.add(e.getMessage());
-            
-            response = new ResponseEntity<>(null, 200L);
+            response = new CommonResponse<>(groupService.getGroups());
+        } catch (Exception e) {
+            response = new CommonResponse<>(e.getMessage());
         }
-        return new CommonResponse<>(flag, response, problems);
+        return new ResponseEntity<>(response, status);
     }
 
-    public CommonResponse<Group> getStudentGroupById(IdRequest idRequest) {
-        var flag = false;
+    public ResponseEntity<CommonResponse<Group>> getStudentGroupById(IdRequest idRequest) {
         var problems = idRequestValidator.validate(idRequest);
-        ResponseEntity<Group> response;
+        long status = 200L;
+        CommonResponse<Group> response;
         if (problems.isEmpty()) {
             try {
-                response = new ResponseEntity<>(groupService.getGroup(idRequest.getId()));
-                flag = true;
-            } catch (ServiceException e) {
-                response = new ResponseEntity<>(null, 422L);
-                problems.add(e.getMessage());
-                
+                response = new CommonResponse<>(groupService.getGroup(idRequest.getId()));
+            } catch (Exception e) {
+                response = new CommonResponse<>(e.getMessage());
             }
         } else {
-            response = new ResponseEntity<>(null, 422L);
+            response = new CommonResponse<>("Error while validate", problems);
         }
-        return new CommonResponse<>(flag, response, problems);
+        return new ResponseEntity<>(response, status);
     }
 
-
-    // TODO переделать все методы под такой тип
-    // ловить любые ислючения
     public ResponseEntity<CommonResponse<Long>> addStudentGroup(AddStudentGroupRequest addStudentGroupRequest) {
         var problems = addStudentGroupValidator.validate(addStudentGroupRequest);
         long status = 200L;
         CommonResponse<Long> response;
         if (problems.isEmpty()) {
-
             try {
                 response = new CommonResponse<>(groupService.addGroup(addStudentGroupRequest.getName()));
-            } catch (ServiceException e) {
-                response = new CommonResponse<>(e.getMessage(), problems);
+            } catch (Exception e) {
+                response = new CommonResponse<>(e.getMessage());
             }
         } else {
             response = new CommonResponse<>("Error while validate", problems);
         }
-        return new ResponseEntity<>(response, 422L);
+        return new ResponseEntity<>(response, status);
     }
 
-    public CommonResponse<Long> editStudentGroup(EditStudentGroupRequest editStudentGroupRequest) {
-        var flag = false;
+    public ResponseEntity<CommonResponse<Long>> editStudentGroup(EditStudentGroupRequest editStudentGroupRequest) {
         var problems = editStudentGroupValidator.validate(editStudentGroupRequest);
-        ResponseEntity<Long> response;
+        long status = 200L;
+        CommonResponse<Long> response;
         if (problems.isEmpty()) {
             try {
-                response = new ResponseEntity<>(groupService.updateGroup(new Group(editStudentGroupRequest.getId(),
-                        editStudentGroupRequest.getName())).getId(), 200L);
-            } catch (ServiceException e) {
-                problems.add(e.getMessage());
-                
-                response = new ResponseEntity<>(null, 422L);
+                response = new CommonResponse<>(editStudentGroupRequest.getId());
+                groupService.updateGroup(new Group(editStudentGroupRequest.getId(), editStudentGroupRequest.getName()));
+            } catch (Exception e) {
+                response = new CommonResponse<>(e.getMessage());
             }
         } else {
-            response = new ResponseEntity<>(null, 422L);
+            response = new CommonResponse<>("Error while validate", problems);
         }
-        return new CommonResponse<>(flag, response, problems);
+        return new ResponseEntity<>(response, status);
     }
 
-    public CommonResponse<Long> deleteStudentGroup(IdRequest idRequest) {
-        var flag = false;
+    public ResponseEntity<CommonResponse<Long>> deleteStudentGroup(IdRequest idRequest) {
         var problems = idRequestValidator.validate(idRequest);
-        ResponseEntity<Long> response;
+        long status = 200L;
+        CommonResponse<Long> response;
         if (problems.isEmpty()) {
             try {
-                response = new ResponseEntity<>(groupService.deleteGroup(idRequest.getId()));
-            } catch (ServiceException e) {
-                problems.add(e.getMessage());
-                
-                response = new ResponseEntity<>(null, 422L);
+                response = new CommonResponse<>(groupService.deleteGroup(idRequest.getId()));
+            } catch (Exception e) {
+                response = new CommonResponse<>(e.getMessage());
             }
         } else {
-            response = new ResponseEntity<>(null, 422L);
+            response = new CommonResponse<>("Error while validate", problems);
         }
-        return new CommonResponse<>(flag, response, problems);
+        return new ResponseEntity<>(response, status);
     }
 }
