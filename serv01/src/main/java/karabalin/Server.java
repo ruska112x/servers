@@ -44,5 +44,7 @@ public class Server {
         groupController.deleteStudentGroup(new IdRequest(1L));
         responseGroup = groupController.getStudentGroups();
         System.out.println(new ResponseHandler<>(responseGroup).getData());
+
+        // TODO: 10/13/23 обёртку для всего этого init, start, send(строка содержащая ендпоинт и жсон строку), парсить и десериализовывать в реквест, респонс хендлер не нужен по сути он заменяет фронт
     }
 }

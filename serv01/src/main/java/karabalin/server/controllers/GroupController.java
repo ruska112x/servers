@@ -36,6 +36,7 @@ public class GroupController {
         try {
             response = new CommonResponse<>(groupService.getGroups());
         } catch (Exception e) {
+            status = 422L;
             response = new CommonResponse<>(e.getMessage());
         }
         return new ResponseEntity<>(response, status);
@@ -49,9 +50,11 @@ public class GroupController {
             try {
                 response = new CommonResponse<>(groupService.getGroup(idRequest.getId()));
             } catch (Exception e) {
+                status = 422L;
                 response = new CommonResponse<>(e.getMessage());
             }
         } else {
+            status = 422L;
             response = new CommonResponse<>("Error while validate", problems);
         }
         return new ResponseEntity<>(response, status);
@@ -59,15 +62,17 @@ public class GroupController {
 
     public ResponseEntity<CommonResponse<Long>> addStudentGroup(AddStudentGroupRequest addStudentGroupRequest) {
         var problems = addStudentGroupValidator.validate(addStudentGroupRequest);
-        long status = 200L;
+        long status = 201L;
         CommonResponse<Long> response;
         if (problems.isEmpty()) {
             try {
                 response = new CommonResponse<>(groupService.addGroup(addStudentGroupRequest.getName()));
             } catch (Exception e) {
+                status = 422L;
                 response = new CommonResponse<>(e.getMessage());
             }
         } else {
+            status = 422L;
             response = new CommonResponse<>("Error while validate", problems);
         }
         return new ResponseEntity<>(response, status);
