@@ -87,9 +87,11 @@ public class GroupController {
                 response = new CommonResponse<>(editStudentGroupRequest.getId());
                 groupService.updateGroup(new Group(editStudentGroupRequest.getId(), editStudentGroupRequest.getName()));
             } catch (Exception e) {
+                status = 404L;
                 response = new CommonResponse<>(e.getMessage());
             }
         } else {
+            status = 422L;
             response = new CommonResponse<>("Error while validate", problems);
         }
         return new ResponseEntity<>(response, status);

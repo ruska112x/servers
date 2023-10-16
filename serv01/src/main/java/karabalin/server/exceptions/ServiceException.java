@@ -5,8 +5,6 @@ public class ServiceException extends Exception {
         super(message);
     }
 
-    // TODO: 10/13/23 notfoundexc + статус код 404 
-    
     public ServiceException(String message, Throwable cause) {
         super(message, cause);
     }

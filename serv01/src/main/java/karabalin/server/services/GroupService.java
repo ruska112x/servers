@@ -1,6 +1,7 @@
 package karabalin.server.services;
 
 import karabalin.server.entities.Group;
+import karabalin.server.exceptions.NotFoundException;
 import karabalin.server.exceptions.RepositoryException;
 import karabalin.server.exceptions.ServiceException;
 import karabalin.server.repositories.interfaces.IGroupRepository;
@@ -28,7 +29,7 @@ public class GroupService implements IGroupService {
     public Group updateGroup(Group group) throws ServiceException {
         try {
             if (groupsRepository.update(group) == null) {
-                throw new ServiceException("Group with id = " + group.getId() + " not found");
+                throw new NotFoundException("Group with id = " + group.getId() + " not found");
             }
         } catch (RepositoryException e) {
             throw new ServiceException(e.getMessage(), e);
