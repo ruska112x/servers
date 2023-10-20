@@ -17,7 +17,7 @@ public class IdRequestValidator implements Validator<IdRequest> {
     @Override
     public List<String> validate(IdRequest idRequest) {
         var result = new ArrayList<String>();
-        var id = idRequest.getId();
+        var id = idRequest.id();
         if (!longValidator.notNull(id)) {
             result.add("Id is Null");
         }

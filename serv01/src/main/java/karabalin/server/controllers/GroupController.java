@@ -13,15 +13,14 @@ import karabalin.server.validators.group.EditStudentGroupValidator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class GroupController {
 
-    private GroupService groupService;
-    private AddStudentGroupValidator addStudentGroupValidator;
+    private final GroupService groupService;
+    private final AddStudentGroupValidator addStudentGroupValidator;
 
-    private EditStudentGroupValidator editStudentGroupValidator;
-    private IdRequestValidator idRequestValidator;
+    private final EditStudentGroupValidator editStudentGroupValidator;
+    private final IdRequestValidator idRequestValidator;
 
     public GroupController(GroupService groupService,
                            AddStudentGroupValidator addStudentGroupValidator,
@@ -53,7 +52,7 @@ public class GroupController {
         CommonResponse<Group> response;
         if (problems.isEmpty()) {
             try {
-                Group group = groupService.getGroup(idRequest.getId());
+                Group group = groupService.getGroup(idRequest.id());
                 response = new CommonResponse<>(group);
             } catch (Exception e) {
                 status = 422L;
@@ -110,8 +109,8 @@ public class GroupController {
         CommonResponse<Long> response;
         if (problems.isEmpty()) {
             try {
-                groupService.deleteGroup(idRequest.getId());
-                response = new CommonResponse<>(idRequest.getId());
+                groupService.deleteGroup(idRequest.id());
+                response = new CommonResponse<>(idRequest.id());
             } catch (Exception e) {
                 status = 422L;
                 response = new CommonResponse<>(e.getMessage());

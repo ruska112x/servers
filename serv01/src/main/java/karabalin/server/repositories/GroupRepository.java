@@ -7,7 +7,7 @@ import karabalin.server.repositories.interfaces.IGroupRepository;
 import java.util.*;
 
 public class GroupRepository implements IGroupRepository {
-    private Map<Long, Group> repo;
+    private final Map<Long, Group> repo;
 
     public GroupRepository(DataBase dataBase) {
         this.repo = dataBase.getGroupsTable();

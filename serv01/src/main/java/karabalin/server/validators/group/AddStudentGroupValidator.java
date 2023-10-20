@@ -9,7 +9,7 @@ import java.util.List;
 
 public class AddStudentGroupValidator implements Validator<AddStudentGroupRequest> {
 
-    private StringValidator stringValidator;
+    private final StringValidator stringValidator;
 
     public AddStudentGroupValidator(StringValidator stringValidator) {
         this.stringValidator = stringValidator;
@@ -17,17 +17,7 @@ public class AddStudentGroupValidator implements Validator<AddStudentGroupReques
 
     @Override
     public List<String> validate(AddStudentGroupRequest addStudentGroupRequest) {
-        var result = new ArrayList<String>();
         var name = addStudentGroupRequest.getName();
-        if (!stringValidator.notNull(name)) {
-            result.add("Name is null!");
-        }
-        if (!stringValidator.notEmpty(name)) {
-            result.add("Name is empty!");
-        }
-        if (!stringValidator.lessThan(name, 255)) {
-            result.add("Name is longer than!");
-        }
-        return result;
+        return new ArrayList<String>(stringValidator.validate(name, "Name"));
     }
 }
