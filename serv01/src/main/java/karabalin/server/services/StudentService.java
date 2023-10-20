@@ -49,7 +49,7 @@ public class StudentService implements IStudentService {
     @Override
     public Student getStudent(long id) throws ServiceException {
         try {
-            studentRepository.getById(id);
+            return studentRepository.getById(id);
         } catch (RepositoryException e) {
             throw new ServiceException(e.getMessage(), e);
         }
