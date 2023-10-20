@@ -4,8 +4,7 @@ import karabalin.server.entities.Group;
 import karabalin.server.exceptions.RepositoryException;
 import karabalin.server.repositories.interfaces.IGroupRepository;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GroupRepository implements IGroupRepository {
     private Map<Long, Group> repo;
@@ -16,7 +15,7 @@ public class GroupRepository implements IGroupRepository {
 
     @Override
     public long add(Group group) {
-        long currentId = repo.keySet().size();
+        long currentId = !repo.isEmpty() ? Collections.max(repo.keySet()) + 1 : 1;
         repo.put(currentId, new Group(currentId, group.getName()));
         return currentId;
     }
