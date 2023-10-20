@@ -1,12 +1,12 @@
 package karabalin.server.controllers;
 
 import karabalin.server.responses.CommonResponse;
-import karabalin.server.services.GroupService;
 import karabalin.server.entities.Group;
 import karabalin.server.requests.IdRequest;
 import karabalin.server.requests.group.AddStudentGroupRequest;
 import karabalin.server.requests.group.EditStudentGroupRequest;
 import karabalin.server.responses.ResponseEntity;
+import karabalin.server.services.interfaces.IGroupService;
 import karabalin.server.validators.IdRequestValidator;
 import karabalin.server.validators.group.AddStudentGroupValidator;
 import karabalin.server.validators.group.EditStudentGroupValidator;
@@ -16,13 +16,13 @@ import java.util.List;
 
 public class GroupController {
 
-    private final GroupService groupService;
+    private final IGroupService groupService;
     private final AddStudentGroupValidator addStudentGroupValidator;
 
     private final EditStudentGroupValidator editStudentGroupValidator;
     private final IdRequestValidator idRequestValidator;
 
-    public GroupController(GroupService groupService,
+    public GroupController(IGroupService groupService,
                            AddStudentGroupValidator addStudentGroupValidator,
                            EditStudentGroupValidator editStudentGroupValidator,
                            IdRequestValidator idRequestValidator) {
@@ -37,7 +37,7 @@ public class GroupController {
         long status = 200L;
         CommonResponse<List<Group>> response;
         try {
-            List<Group> groupList = groupService.getGroups();
+            var groupList = groupService.getGroups();
             response = new CommonResponse<>(groupList);
         } catch (Exception e) {
             status = 422L;
@@ -52,7 +52,7 @@ public class GroupController {
         CommonResponse<Group> response;
         if (problems.isEmpty()) {
             try {
-                Group group = groupService.getGroup(idRequest.id());
+                var group = groupService.getGroup(idRequest.id());
                 response = new CommonResponse<>(group);
             } catch (Exception e) {
                 status = 422L;
@@ -71,7 +71,7 @@ public class GroupController {
         CommonResponse<Long> response;
         if (problems.isEmpty()) {
             try {
-                Long id = groupService.addGroup(addStudentGroupRequest.getName());
+                var id = groupService.addGroup(new Group(null, addStudentGroupRequest.getName()));
                 response = new CommonResponse<>(id);
             } catch (Exception e) {
                 status = 422L;

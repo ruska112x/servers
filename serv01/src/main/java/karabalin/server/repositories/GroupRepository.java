@@ -7,40 +7,41 @@ import karabalin.server.repositories.interfaces.IGroupRepository;
 import java.util.*;
 
 public class GroupRepository implements IGroupRepository {
-    private final Map<Long, Group> repo;
+    private final Map<Long, Group> groupMap;
 
     public GroupRepository(DataBase dataBase) {
-        this.repo = dataBase.getGroupsTable();
+        this.groupMap = dataBase.getGroupsTable();
     }
 
     @Override
     public long add(Group group) {
-        long currentId = !repo.isEmpty() ? Collections.max(repo.keySet()) + 1 : 1;
-        repo.put(currentId, new Group(currentId, group.getName()));
+        long currentId = !groupMap.isEmpty() ? Collections.max(groupMap.keySet()) + 1 : 1;
+        groupMap.put(currentId, new Group(currentId, group.getName()));
         return currentId;
     }
 
     @Override
-    public void update(Group group) throws RepositoryException {
-        if (repo.containsKey(group.getId())) {
-            repo.put(group.getId(), group);
+    public Long update(Group group) throws RepositoryException {
+        if (groupMap.containsKey(group.getId())) {
+            groupMap.put(group.getId(), group);
+            return group.getId();
         } else {
-            throw new RepositoryException("Group with id=" + group.getId() + " not found in DB");
+            return null;
         }
     }
 
     @Override
     public void deleteById(long id) {
-        repo.remove(id);
+        groupMap.remove(id);
     }
 
     @Override
     public Group getById(long id) {
-        return repo.get(id);
+        return groupMap.getOrDefault(id, null);
     }
 
     @Override
     public List<Group> getAll() {
-        return repo.values().stream().toList();
+        return groupMap.values().stream().toList();
     }
 }

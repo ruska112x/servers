@@ -17,9 +17,9 @@ public class GroupService implements IGroupService {
     }
 
     @Override
-    public long addGroup(String name) throws ServiceException {
+    public long addGroup(Group group) throws ServiceException {
         try {
-            return groupsRepository.add(new Group(null, name));
+            return groupsRepository.add(new Group(null, group.getName()));
         } catch (RepositoryException e) {
             throw new ServiceException(e.getMessage(), e);
         }
@@ -28,7 +28,9 @@ public class GroupService implements IGroupService {
     @Override
     public void updateGroup(Group group) throws ServiceException {
         try {
-            groupsRepository.update(group);
+            if (groupsRepository.update(group) == null) {
+                throw new ServiceException("Group with id = " + group.getId() + " not found!");
+            }
         } catch (RepositoryException e) {
             throw new ServiceException(e.getMessage(), e);
         }

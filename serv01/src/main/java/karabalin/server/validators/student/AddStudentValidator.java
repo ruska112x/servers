@@ -21,14 +21,14 @@ public class AddStudentValidator implements Validator<AddStudentRequest> {
     @Override
     public List<String> validate(AddStudentRequest addStudentRequest) {
         var result = new ArrayList<String>();
-        var lastName = addStudentRequest.lastName();
-        var firstName = addStudentRequest.firstName();
-        var middleName = addStudentRequest.middleName();
+        var surname = addStudentRequest.surname();
+        var name = addStudentRequest.name();
+        var patronymic = addStudentRequest.patronymic();
         var groupId = addStudentRequest.groupId();
         var status = addStudentRequest.status();
-        result.addAll(stringValidator.validate(lastName, "LastName"));
-        result.addAll(stringValidator.validate(firstName, "FirstName"));
-        result.addAll(stringValidator.validate(middleName, "MiddleName"));
+        result.addAll(stringValidator.validate(surname, "Surname"));
+        result.addAll(stringValidator.validate(name, "name"));
+        result.addAll(stringValidator.validate(patronymic, "Patronymic"));
         result.addAll(longValidator.validate(groupId, "GroupId"));
         result.addAll(stringValidator.validate(status, "Status"));
         return result;

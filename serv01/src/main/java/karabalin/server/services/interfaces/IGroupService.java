@@ -6,7 +6,7 @@ import karabalin.server.exceptions.ServiceException;
 import java.util.List;
 
 public interface IGroupService {
-    long addGroup(String name) throws ServiceException;
+    long addGroup(Group group) throws ServiceException;
 
     void updateGroup(Group t) throws ServiceException;
 
