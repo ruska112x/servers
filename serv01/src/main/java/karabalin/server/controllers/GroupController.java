@@ -13,6 +13,7 @@ import karabalin.server.validators.group.EditStudentGroupValidator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class GroupController {
 
@@ -22,7 +23,10 @@ public class GroupController {
     private EditStudentGroupValidator editStudentGroupValidator;
     private IdRequestValidator idRequestValidator;
 
-    public GroupController(GroupService groupService, AddStudentGroupValidator addStudentGroupValidator, EditStudentGroupValidator editStudentGroupValidator, IdRequestValidator idRequestValidator) {
+    public GroupController(GroupService groupService,
+                           AddStudentGroupValidator addStudentGroupValidator,
+                           EditStudentGroupValidator editStudentGroupValidator,
+                           IdRequestValidator idRequestValidator) {
         this.groupService = groupService;
         this.addStudentGroupValidator = addStudentGroupValidator;
         this.editStudentGroupValidator = editStudentGroupValidator;
@@ -34,7 +38,8 @@ public class GroupController {
         long status = 200L;
         CommonResponse<List<Group>> response;
         try {
-            response = new CommonResponse<>(groupService.getGroups());
+            List<Group> groupList = groupService.getGroups();
+            response = new CommonResponse<>(groupList);
         } catch (Exception e) {
             status = 422L;
             response = new CommonResponse<>(e.getMessage());
@@ -48,7 +53,8 @@ public class GroupController {
         CommonResponse<Group> response;
         if (problems.isEmpty()) {
             try {
-                response = new CommonResponse<>(groupService.getGroup(idRequest.getId()));
+                Group group = groupService.getGroup(idRequest.getId());
+                response = new CommonResponse<>(group);
             } catch (Exception e) {
                 status = 422L;
                 response = new CommonResponse<>(e.getMessage());
@@ -66,7 +72,8 @@ public class GroupController {
         CommonResponse<Long> response;
         if (problems.isEmpty()) {
             try {
-                response = new CommonResponse<>(groupService.addGroup(addStudentGroupRequest.getName()));
+                Long id = groupService.addGroup(addStudentGroupRequest.getName());
+                response = new CommonResponse<>(id);
             } catch (Exception e) {
                 status = 422L;
                 response = new CommonResponse<>(e.getMessage());
@@ -84,8 +91,8 @@ public class GroupController {
         CommonResponse<Long> response;
         if (problems.isEmpty()) {
             try {
-                response = new CommonResponse<>(editStudentGroupRequest.getId());
                 groupService.updateGroup(new Group(editStudentGroupRequest.getId(), editStudentGroupRequest.getName()));
+                response = new CommonResponse<>(editStudentGroupRequest.getId());
             } catch (Exception e) {
                 status = 404L;
                 response = new CommonResponse<>(e.getMessage());
@@ -103,11 +110,14 @@ public class GroupController {
         CommonResponse<Long> response;
         if (problems.isEmpty()) {
             try {
-                response = new CommonResponse<>(groupService.deleteGroup(idRequest.getId()));
+                groupService.deleteGroup(idRequest.getId());
+                response = new CommonResponse<>(idRequest.getId());
             } catch (Exception e) {
+                status = 422L;
                 response = new CommonResponse<>(e.getMessage());
             }
         } else {
+            status = 422L;
             response = new CommonResponse<>("Error while validate", problems);
         }
         return new ResponseEntity<>(response, status);

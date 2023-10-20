@@ -9,7 +9,7 @@ public interface IGroupRepository {
 
     long add(Group t) throws RepositoryException;
 
-    Group update(Group t) throws RepositoryException;
+    void update(Group t) throws RepositoryException;
     void deleteById(long id) throws RepositoryException;
     Group getById(long id) throws RepositoryException;
 

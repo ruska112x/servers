@@ -1,6 +1,7 @@
 package karabalin.server.repositories;
 
 import karabalin.server.entities.Group;
+import karabalin.server.exceptions.RepositoryException;
 import karabalin.server.repositories.interfaces.IGroupRepository;
 
 import java.util.List;
@@ -9,24 +10,23 @@ import java.util.Map;
 public class GroupRepository implements IGroupRepository {
     private Map<Long, Group> repo;
 
-    private Long currentId = 1L;
-
     public GroupRepository(DataBase dataBase) {
         this.repo = dataBase.getGroupsTable();
     }
 
     @Override
     public long add(Group group) {
+        long currentId = repo.keySet().size();
         repo.put(currentId, new Group(currentId, group.getName()));
-        return currentId++;
+        return currentId;
     }
 
     @Override
-    public Group update(Group group) {
+    public void update(Group group) throws RepositoryException {
         if (repo.containsKey(group.getId())) {
-            return repo.put(group.getId(), group);
+            repo.put(group.getId(), group);
         } else {
-            return null;
+            throw new RepositoryException("Group with id=" + group.getId() + " not found in DB");
         }
     }
 

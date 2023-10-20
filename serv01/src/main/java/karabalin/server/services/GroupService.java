@@ -26,25 +26,21 @@ public class GroupService implements IGroupService {
     }
 
     @Override
-    public Group updateGroup(Group group) throws ServiceException {
+    public void updateGroup(Group group) throws ServiceException {
         try {
-            if (groupsRepository.update(group) == null) {
-                throw new NotFoundException("Group with id = " + group.getId() + " not found");
-            }
+            groupsRepository.update(group);
         } catch (RepositoryException e) {
             throw new ServiceException(e.getMessage(), e);
         }
-        return group;
     }
 
     @Override
-    public long deleteGroup(long id) throws ServiceException {
+    public void deleteGroup(long id) throws ServiceException {
         try {
             groupsRepository.deleteById(id);
         } catch (RepositoryException e) {
             throw new ServiceException(e.getMessage(), e);
         }
-        return id;
     }
 
     @Override

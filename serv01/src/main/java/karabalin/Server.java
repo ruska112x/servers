@@ -20,6 +20,7 @@ import karabalin.server.validators.primitive.StringValidator;
 import java.util.List;
 
 public class Server {
+
     public static void main(String[] args) {
         System.out.println("Hello, World!");
         DataBase dataBase = new DataBase();
