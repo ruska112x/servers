@@ -15,8 +15,8 @@ public class StudentRepository implements IStudentRepository {
     private final Map<Long, Group> groupMap;
 
     public StudentRepository(DataBase dataBase) {
-        studentMap = dataBase.getStudentsTable();
-        groupMap = dataBase.getGroupsTable();
+        studentMap = dataBase.studentsTable();
+        groupMap = dataBase.groupsTable();
     }
 
 

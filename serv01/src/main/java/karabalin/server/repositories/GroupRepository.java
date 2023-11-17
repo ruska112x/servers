@@ -10,7 +10,7 @@ public class GroupRepository implements IGroupRepository {
     private final Map<Long, Group> groupMap;
 
     public GroupRepository(DataBase dataBase) {
-        this.groupMap = dataBase.getGroupsTable();
+        this.groupMap = dataBase.groupsTable();
     }
 
     @Override
