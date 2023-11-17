@@ -26,7 +26,7 @@ public class TeacherService implements ITeacherService {
     }
 
     @Override
-    public long update(TeacherDTO teacher) throws ServiceException {
+    public void update(TeacherDTO teacher) throws ServiceException {
         try {
             if (teacherRepository.update(teacher) == null) {
                 throw new ServiceException("Teacher with id = " + teacher.id() + " not found!");
@@ -52,6 +52,7 @@ public class TeacherService implements ITeacherService {
             if (result == null) {
                 throw new ServiceException("Teacher with id = " + id + " not found!");
             }
+            return result;
         } catch (RepositoryException e) {
             throw new ServiceException(e.getMessage(), e);
         }
