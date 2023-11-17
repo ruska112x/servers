@@ -1,17 +1,17 @@
 package karabalin.server.repositories.interfaces;
 
-import karabalin.server.entities.Group;
+import karabalin.server.entities.GroupDTO;
 import karabalin.server.exceptions.RepositoryException;
 
 import java.util.List;
 
 public interface IGroupRepository {
 
-    long add(Group t) throws RepositoryException;
+    long add(GroupDTO t) throws RepositoryException;
 
-    Long update(Group t) throws RepositoryException;
+    Long update(GroupDTO t) throws RepositoryException;
     void deleteById(long id) throws RepositoryException;
-    Group getById(long id) throws RepositoryException;
+    GroupDTO getById(long id) throws RepositoryException;
 
-    List<Group> getAll() throws RepositoryException;
+    List<GroupDTO> getAll() throws RepositoryException;
 }

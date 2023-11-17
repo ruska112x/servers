@@ -1,18 +1,20 @@
 package karabalin.server.repositories;
 
-import karabalin.server.entities.Group;
-import karabalin.server.entities.Student;
+import karabalin.server.entities.GroupDTO;
+import karabalin.server.entities.StudentDTO;
 import karabalin.server.exceptions.RepositoryException;
 import karabalin.server.repositories.interfaces.IStudentRepository;
+import karabalin.server.repositories.dbentities.*;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class StudentRepository implements IStudentRepository {
 
-    private final Map<Long, Student> studentMap;
-    private final Map<Long, Group> groupMap;
+    private final Map<Long, StudentDB> studentMap;
+    private final Map<Long, GroupDB> groupMap;
 
     public StudentRepository(DataBase dataBase) {
         studentMap = dataBase.studentsTable();
@@ -21,17 +23,18 @@ public class StudentRepository implements IStudentRepository {
 
 
     @Override
-    public long add(Student student) throws RepositoryException {
+    public long add(StudentDTO student) throws RepositoryException {
         long currentId = !studentMap.isEmpty() ? Collections.max(studentMap.keySet()) + 1 : 1;
-        studentMap.put(currentId, new Student(currentId, student.getPatronymic(), student.getSurname(), student.getName(), student.getStatus(), student.getGroup()));
+        studentMap.put(currentId, new StudentDB(student.surname(), student.name(), student.patronymic(), student.status(), student.group().id()));
         return currentId;
     }
 
     @Override
-    public Long update(Student student) throws RepositoryException {
-        if (studentMap.containsKey(student.getId())) {
-            studentMap.put(student.getId(), student);
-            return student.getId();
+    public Long update(StudentDTO student) throws RepositoryException {
+        Long studentId = student.id();
+        if (studentMap.containsKey(studentId)) {
+            studentMap.put(studentId, new StudentDB(student.surname(), student.name(), student.patronymic(), student.status(), student.group().id()));
+            return studentId;
         } else {
             return null;
         }
@@ -43,14 +46,26 @@ public class StudentRepository implements IStudentRepository {
     }
 
     @Override
-    public Student getById(long id) throws RepositoryException {
-        return studentMap.getOrDefault(id, null);
+    public StudentDTO getById(long id) throws RepositoryException {
+        var student = studentMap.getOrDefault(id, null);
+        if (student == null) {
+            return null;
+        } else {
+            var group = groupMap.get(student.groupId());
+            return new StudentDTO(id, student.surname(), student.name(), student.patronymic(), student.status(), new GroupDTO(student.groupId(), group.name()));
+        }
     }
 
     @Override
-    public List<Student> getStudentsByGroupId(long groupId) throws RepositoryException {
+    public List<StudentDTO> getStudentsByGroupId(long groupId) throws RepositoryException {
         if (groupMap.containsKey(groupId)) {
-            return studentMap.values().stream().filter(x -> x.getGroup().getId() == groupId).toList();
+            var group = groupMap.get(groupId);
+            return studentMap.entrySet().stream().filter(x -> x.getValue().groupId() == groupId).map(
+                    entry -> {
+                        var student = entry.getValue();
+                        return new StudentDTO(entry.getKey(), student.surname(), student.name(), student.patronymic(), student.status(), new GroupDTO(groupId, group.name()));
+                    }
+            ).collect(Collectors.toList());
         } else {
             return null;
         }
