@@ -1,5 +1,6 @@
 package karabalin;
 
+import karabalin.server.IServer;
 import karabalin.server.controllers.GroupController;
 import karabalin.server.controllers.StudentController;
 import karabalin.server.controllers.SubjectController;
@@ -13,7 +14,6 @@ import karabalin.server.repositories.StudentRepository;
 import karabalin.server.repositories.SubjectRepository;
 import karabalin.server.requests.IdRequest;
 import karabalin.server.requests.group.AddStudentGroupRequest;
-import karabalin.server.requests.group.EditStudentGroupRequest;
 import karabalin.server.requests.student.AddStudentRequest;
 import karabalin.server.requests.student.EditStudentRequest;
 import karabalin.server.requests.subject.AddSubjectRequest;
@@ -34,20 +34,53 @@ import karabalin.server.validators.subject.EditSubjectValidator;
 import java.util.HashMap;
 import java.util.List;
 
-public class Server {
+public class Server implements IServer {
+    private final DateValidator dateValidator;
+    private final LongValidator longValidator;
 
-    public static void main(String[] args) {
-        DateValidator dateValidator = new DateValidator();
-        LongValidator longValidator = new LongValidator();
-        StringValidator stringValidator = new StringValidator();
-        IdRequestValidator idRequestValidator = new IdRequestValidator(longValidator);
-        AddStudentGroupValidator addStudentGroupValidator = new AddStudentGroupValidator(stringValidator);
-        EditStudentGroupValidator editStudentGroupValidator = new EditStudentGroupValidator(longValidator, stringValidator);
-        AddStudentValidator addStudentValidator = new AddStudentValidator(stringValidator, longValidator);
-        EditStudentValidator editStudentValidator = new EditStudentValidator(stringValidator, longValidator);
-        AddSubjectValidator addSubjectValidator = new AddSubjectValidator(stringValidator);
-        EditSubjectValidator editSubjectValidator = new EditSubjectValidator(stringValidator, longValidator);
-        DataBase db = new DataBase(
+    private final StringValidator stringValidator;
+
+    private final IdRequestValidator idRequestValidator;
+
+    private final AddStudentGroupValidator addStudentGroupValidator;
+
+    private final EditStudentGroupValidator editStudentGroupValidator;
+
+    private final AddStudentValidator addStudentValidator;
+
+    private final EditStudentValidator editStudentValidator;
+
+    private final AddSubjectValidator addSubjectValidator;
+
+    private final EditSubjectValidator editSubjectValidator;
+
+    private final DataBase dataBase;
+
+    private final GroupRepository groupRepository;
+
+    private final StudentRepository studentRepository;
+
+    private final SubjectRepository subjectRepository;
+
+    private final GroupService groupService;
+
+    private final StudentService studentService;
+
+    private final SubjectService subjectService;
+    private final GroupController groupController;
+
+    public Server() {
+        dateValidator = new DateValidator();
+        longValidator = new LongValidator();
+        stringValidator = new StringValidator();
+        idRequestValidator = new IdRequestValidator(longValidator);
+        addStudentGroupValidator = new AddStudentGroupValidator(stringValidator);
+        editStudentGroupValidator = new EditStudentGroupValidator(longValidator, stringValidator);
+        addStudentValidator = new AddStudentValidator(stringValidator, longValidator);
+        editStudentValidator = new EditStudentValidator(stringValidator, longValidator);
+        addSubjectValidator = new AddSubjectValidator(stringValidator);
+        editSubjectValidator = new EditSubjectValidator(stringValidator, longValidator);
+        dataBase = new DataBase(
                 new HashMap<>(),
                 new HashMap<>(),
                 new HashMap<>(),
@@ -55,13 +88,13 @@ public class Server {
                 new HashMap<>(),
                 new HashMap<>()
         );
-        GroupRepository groupRepository = new GroupRepository(db);
-        StudentRepository studentRepository = new StudentRepository(db);
-        SubjectRepository subjectRepository = new SubjectRepository(db);
-        GroupService groupService = new GroupService(groupRepository);
-        StudentService studentService = new StudentService(studentRepository);
-        SubjectService subjectService = new SubjectService(subjectRepository);
-        GroupController groupController = new GroupController(
+        groupRepository = new GroupRepository(dataBase);
+        studentRepository = new StudentRepository(dataBase);
+        subjectRepository = new SubjectRepository(dataBase);
+        groupService = new GroupService(groupRepository);
+        studentService = new StudentService(studentRepository);
+        subjectService = new SubjectService(subjectRepository);
+        groupController = new GroupController(
                 groupService,
                 addStudentGroupValidator,
                 editStudentGroupValidator,
@@ -81,6 +114,14 @@ public class Server {
                 idRequestValidator
         );
 
+    }
+
+    @Override
+    public void executeRequest(String endPoint, String json) {
+
+    }
+
+    /*public static void main(String[] args) {
         long mmb103ID = groupController
                 .addStudentGroup(
                         new AddStudentGroupRequest("MMB-103")
@@ -215,5 +256,5 @@ public class Server {
                 .getBody()
                 .getData();
         System.out.println(subjectDTOList);
-    }
+    }*/
 }
