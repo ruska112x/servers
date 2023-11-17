@@ -22,10 +22,12 @@ public class GroupController {
     private final EditStudentGroupValidator editStudentGroupValidator;
     private final IdRequestValidator idRequestValidator;
 
-    public GroupController(IGroupService groupService,
-                           AddStudentGroupValidator addStudentGroupValidator,
-                           EditStudentGroupValidator editStudentGroupValidator,
-                           IdRequestValidator idRequestValidator) {
+    public GroupController(
+            IGroupService groupService,
+            AddStudentGroupValidator addStudentGroupValidator,
+            EditStudentGroupValidator editStudentGroupValidator,
+            IdRequestValidator idRequestValidator
+    ) {
         this.groupService = groupService;
         this.addStudentGroupValidator = addStudentGroupValidator;
         this.editStudentGroupValidator = editStudentGroupValidator;
@@ -33,7 +35,6 @@ public class GroupController {
     }
 
     public ResponseEntity<CommonResponse<List<GroupDTO>>> getStudentGroups() {
-        var problems = new ArrayList<String>();
         long status = 200L;
         CommonResponse<List<GroupDTO>> response;
         try {

@@ -29,7 +29,7 @@ public class StudentService implements IStudentService {
     public void updateStudent(StudentDTO student) throws ServiceException {
         try {
             if (studentRepository.update(student) == null) {
-                throw new ServiceException("Group with id = " + student.id() + " not found!");
+                throw new ServiceException("Student with id = " + student.id() + " not found!");
             }
         } catch (RepositoryException e) {
             throw new ServiceException(e.getMessage(), e);
@@ -64,9 +64,8 @@ public class StudentService implements IStudentService {
             var result = studentRepository.getStudentsByGroupId(groupId);
             if (result == null) {
                 throw new ServiceException("Group with id = " + groupId + " not found!");
-            } else {
-                return result;
             }
+            return result;
         } catch (RepositoryException e) {
             throw new ServiceException(e.getMessage(), e);
         }
