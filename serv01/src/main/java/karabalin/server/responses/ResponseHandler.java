@@ -3,7 +3,7 @@ package karabalin.server.responses;
 import karabalin.server.exceptions.HandelException;
 
 public class ResponseHandler<T, U extends CommonResponse<T>> {
-    private U response;
+    private final U response;
 
     public ResponseHandler(ResponseEntity<U> response) {
         this.response = response.getBody();

@@ -3,7 +3,7 @@ package karabalin.server.responses;
 import java.util.List;
 
 public class CommonResponse<T> {
-    private boolean success;
+    private final boolean success;
     private T data;
 
     private String error;

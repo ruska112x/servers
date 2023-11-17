@@ -21,8 +21,8 @@ public class EditStudentGroupValidator implements Validator<EditStudentGroupRequ
     @Override
     public List<String> validate(EditStudentGroupRequest editStudentGroupRequest) {
         var result = new ArrayList<String>();
-        var id = editStudentGroupRequest.getId();
-        var name = editStudentGroupRequest.getName();
+        var id = editStudentGroupRequest.id();
+        var name = editStudentGroupRequest.name();
         if (!longValidator.notNull(id)) {
             result.add("Id is null!");
         }

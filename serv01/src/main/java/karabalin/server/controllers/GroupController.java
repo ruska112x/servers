@@ -90,8 +90,8 @@ public class GroupController {
         CommonResponse<Long> response;
         if (problems.isEmpty()) {
             try {
-                groupService.updateGroup(new Group(editStudentGroupRequest.getId(), editStudentGroupRequest.getName()));
-                response = new CommonResponse<>(editStudentGroupRequest.getId());
+                groupService.updateGroup(new Group(editStudentGroupRequest.id(), editStudentGroupRequest.name()));
+                response = new CommonResponse<>(editStudentGroupRequest.id());
             } catch (Exception e) {
                 status = 404L;
                 response = new CommonResponse<>(e.getMessage());
