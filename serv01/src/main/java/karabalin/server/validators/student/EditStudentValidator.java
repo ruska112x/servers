@@ -20,14 +20,14 @@ public class EditStudentValidator implements Validator<EditStudentRequest> {
     @Override
     public List<String> validate(EditStudentRequest editStudentRequest) {
         var result = new ArrayList<String>();
-        var lastName = editStudentRequest.lastName();
-        var firstName = editStudentRequest.firstName();
-        var middleName = editStudentRequest.middleName();
+        var surname = editStudentRequest.surname();
+        var name = editStudentRequest.name();
+        var patronymic = editStudentRequest.patronymic();
         var groupId = editStudentRequest.groupId();
         var status = editStudentRequest.status();
-        result.addAll(stringValidator.validate(lastName, "LastName"));
-        result.addAll(stringValidator.validate(firstName, "FirstName"));
-        result.addAll(stringValidator.validate(middleName, "MiddleName"));
+        result.addAll(stringValidator.validate(surname, "LastName"));
+        result.addAll(stringValidator.validate(name, "FirstName"));
+        result.addAll(stringValidator.validate(patronymic, "MiddleName"));
         result.addAll(longValidator.validate(groupId, "GroupId"));
         result.addAll(stringValidator.validate(status, "Status"));
         return result;

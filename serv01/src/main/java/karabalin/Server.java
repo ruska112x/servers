@@ -12,6 +12,7 @@ import karabalin.server.requests.IdRequest;
 import karabalin.server.requests.group.AddStudentGroupRequest;
 import karabalin.server.requests.group.EditStudentGroupRequest;
 import karabalin.server.requests.student.AddStudentRequest;
+import karabalin.server.requests.student.EditStudentRequest;
 import karabalin.server.services.GroupService;
 import karabalin.server.services.StudentService;
 import karabalin.server.validators.IdRequestValidator;
@@ -60,7 +61,8 @@ public class Server {
                 studentService,
                 groupService,
                 idRequestValidator,
-                addStudentValidator
+                addStudentValidator,
+                editStudentValidator
         );
 
         long mmb103ID = groupController
@@ -139,6 +141,22 @@ public class Server {
 
         List<StudentDTO> studentDTOList = studentController
                 .getStudentsByGroupId(new IdRequest(mmb104ID))
+                .getBody()
+                .getData();
+        System.out.println(studentDTOList);
+
+        studentController.editStudent(
+                new EditStudentRequest(
+                        softID,
+                        "Mikula",
+                        "Gersoft",
+                        "Stanislavovich",
+                        StudentStatuses.STUDY,
+                        mmb103ID
+                )
+        );
+        studentDTOList = studentController
+                .getStudentsByGroupId(new IdRequest(mmb103ID))
                 .getBody()
                 .getData();
         System.out.println(studentDTOList);
