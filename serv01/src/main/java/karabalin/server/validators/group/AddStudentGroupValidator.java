@@ -17,7 +17,7 @@ public class AddStudentGroupValidator implements Validator<AddStudentGroupReques
 
     @Override
     public List<String> validate(AddStudentGroupRequest addStudentGroupRequest) {
-        var name = addStudentGroupRequest.getName();
+        var name = addStudentGroupRequest.name();
         return new ArrayList<String>(stringValidator.validate(name, "Name"));
     }
 }

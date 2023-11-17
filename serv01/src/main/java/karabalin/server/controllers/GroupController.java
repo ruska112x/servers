@@ -71,7 +71,7 @@ public class GroupController {
         CommonResponse<Long> response;
         if (problems.isEmpty()) {
             try {
-                var id = groupService.addGroup(new GroupDTO(null, addStudentGroupRequest.getName()));
+                var id = groupService.addGroup(new GroupDTO(null, addStudentGroupRequest.name()));
                 response = new CommonResponse<>(id);
             } catch (Exception e) {
                 status = 422L;
