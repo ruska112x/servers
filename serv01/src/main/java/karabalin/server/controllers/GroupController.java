@@ -11,7 +11,6 @@ import karabalin.server.validators.IdRequestValidator;
 import karabalin.server.validators.group.AddStudentGroupValidator;
 import karabalin.server.validators.group.EditStudentGroupValidator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GroupController {

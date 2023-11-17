@@ -2,19 +2,24 @@ package karabalin;
 
 import karabalin.server.controllers.GroupController;
 import karabalin.server.controllers.StudentController;
+import karabalin.server.controllers.SubjectController;
 import karabalin.server.entities.GroupDTO;
 import karabalin.server.entities.StudentDTO;
 import karabalin.server.entities.StudentStatuses;
+import karabalin.server.entities.SubjectDTO;
 import karabalin.server.repositories.DataBase;
 import karabalin.server.repositories.GroupRepository;
 import karabalin.server.repositories.StudentRepository;
+import karabalin.server.repositories.SubjectRepository;
 import karabalin.server.requests.IdRequest;
 import karabalin.server.requests.group.AddStudentGroupRequest;
 import karabalin.server.requests.group.EditStudentGroupRequest;
 import karabalin.server.requests.student.AddStudentRequest;
 import karabalin.server.requests.student.EditStudentRequest;
+import karabalin.server.requests.subject.AddSubjectRequest;
 import karabalin.server.services.GroupService;
 import karabalin.server.services.StudentService;
+import karabalin.server.services.SubjectService;
 import karabalin.server.validators.IdRequestValidator;
 import karabalin.server.validators.group.AddStudentGroupValidator;
 import karabalin.server.validators.group.EditStudentGroupValidator;
@@ -23,8 +28,9 @@ import karabalin.server.validators.primitive.LongValidator;
 import karabalin.server.validators.primitive.StringValidator;
 import karabalin.server.validators.student.AddStudentValidator;
 import karabalin.server.validators.student.EditStudentValidator;
+import karabalin.server.validators.subject.AddSubjectValidator;
+import karabalin.server.validators.subject.EditSubjectValidator;
 
-import javax.xml.crypto.Data;
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,6 +45,8 @@ public class Server {
         EditStudentGroupValidator editStudentGroupValidator = new EditStudentGroupValidator(longValidator, stringValidator);
         AddStudentValidator addStudentValidator = new AddStudentValidator(stringValidator, longValidator);
         EditStudentValidator editStudentValidator = new EditStudentValidator(stringValidator, longValidator);
+        AddSubjectValidator addSubjectValidator = new AddSubjectValidator(stringValidator);
+        EditSubjectValidator editSubjectValidator = new EditSubjectValidator(stringValidator, longValidator);
         DataBase db = new DataBase(
                 new HashMap<>(),
                 new HashMap<>(),
@@ -49,8 +57,10 @@ public class Server {
         );
         GroupRepository groupRepository = new GroupRepository(db);
         StudentRepository studentRepository = new StudentRepository(db);
+        SubjectRepository subjectRepository = new SubjectRepository(db);
         GroupService groupService = new GroupService(groupRepository);
         StudentService studentService = new StudentService(studentRepository);
+        SubjectService subjectService = new SubjectService(subjectRepository);
         GroupController groupController = new GroupController(
                 groupService,
                 addStudentGroupValidator,
@@ -63,6 +73,12 @@ public class Server {
                 idRequestValidator,
                 addStudentValidator,
                 editStudentValidator
+        );
+        SubjectController subjectController = new SubjectController(
+                subjectService,
+                addSubjectValidator,
+                editSubjectValidator,
+                idRequestValidator
         );
 
         long mmb103ID = groupController
@@ -160,5 +176,44 @@ public class Server {
                 .getBody()
                 .getData();
         System.out.println(studentDTOList);
+
+        long cppId = subjectController
+                .addSubject(new AddSubjectRequest("C++"))
+                .getBody()
+                .getData();
+
+        SubjectDTO cppDTO = subjectController
+                .getSubjectById(new IdRequest(cppId))
+                .getBody()
+                .getData();
+        System.out.println(cppDTO);
+
+        long oodId = subjectController
+                .addSubject(new AddSubjectRequest("OOD"))
+                .getBody()
+                .getData();
+
+        SubjectDTO oodDTO = subjectController
+                .getSubjectById(new IdRequest(oodId))
+                .getBody()
+                .getData();
+        System.out.println(oodDTO);
+
+        long mathId = subjectController
+                .addSubject(new AddSubjectRequest("Math"))
+                .getBody()
+                .getData();
+
+        SubjectDTO mathDTO = subjectController
+                .getSubjectById(new IdRequest(mathId))
+                .getBody()
+                .getData();
+        System.out.println(mathDTO);
+
+        List<SubjectDTO> subjectDTOList = subjectController
+                .getSubjects()
+                .getBody()
+                .getData();
+        System.out.println(subjectDTOList);
     }
 }

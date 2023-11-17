@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
 public class SubjectRepository  implements ISubjectRepository {
     private final Map<Long, SubjectDB> subjectMap;
 
-    public SubjectRepository(Map<Long, SubjectDB> subjectMap) {
-        this.subjectMap = subjectMap;
+    public SubjectRepository(DataBase dataBase) {
+        this.subjectMap = dataBase.subjectsTable();
     }
 
     @Override
