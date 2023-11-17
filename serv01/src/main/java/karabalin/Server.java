@@ -27,7 +27,7 @@ import java.util.List;
 
 public class Server {
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         System.out.println("Hello, World!");
         DataBase dataBase = new DataBase();
         GroupRepository groupRepository = new GroupRepository(dataBase);
@@ -49,5 +49,5 @@ public class Server {
         System.out.println(studentController.getStudentsByGroupId(new IdRequest(id104)).getBody().getData());
         System.out.println(studentController.getStudentsByGroupId(new IdRequest(id103)).getBody().getData());
         // TODO: 10/13/23 обёртку для всего этого init, start, send(строка содержащая ендпоинт и жсон строку), парсить и десериализовывать в реквест, респонс хендлер не нужен по сути он заменяет фронт
-    }
+    }*/
 }
