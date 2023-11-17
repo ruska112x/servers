@@ -1,10 +1,7 @@
 package karabalin.server.controllers;
 
-import karabalin.server.entities.SubjectDTO;
 import karabalin.server.entities.TeacherDTO;
 import karabalin.server.requests.IdRequest;
-import karabalin.server.requests.subject.AddSubjectRequest;
-import karabalin.server.requests.subject.EditSubjectRequest;
 import karabalin.server.requests.teacher.AddTeacherRequest;
 import karabalin.server.requests.teacher.EditTeacherRequest;
 import karabalin.server.responses.CommonResponse;
