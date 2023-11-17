@@ -1,4 +1,7 @@
 package karabalin.server.entities;
 
-public record GroupDTO(Long id, String name) {
+public record GroupDTO(
+        Long id,
+        String name
+) {
 }

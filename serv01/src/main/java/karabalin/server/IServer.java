@@ -1,5 +1,7 @@
 package karabalin.server;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 public interface IServer {
-    void executeRequest(String endPoint, String json);
+    String executeRequest(String endPoint, String json) throws JsonProcessingException;
 }

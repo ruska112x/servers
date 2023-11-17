@@ -1,5 +1,8 @@
 package karabalin;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import karabalin.server.IServer;
 import karabalin.server.controllers.GroupController;
 import karabalin.server.controllers.StudentController;
@@ -69,6 +72,10 @@ public class Server implements IServer {
     private final SubjectService subjectService;
     private final GroupController groupController;
 
+    private final StudentController studentController;
+
+    private final SubjectController subjectController;
+
     public Server() {
         dateValidator = new DateValidator();
         longValidator = new LongValidator();
@@ -100,14 +107,14 @@ public class Server implements IServer {
                 editStudentGroupValidator,
                 idRequestValidator
         );
-        StudentController studentController = new StudentController(
+        studentController = new StudentController(
                 studentService,
                 groupService,
                 idRequestValidator,
                 addStudentValidator,
                 editStudentValidator
         );
-        SubjectController subjectController = new SubjectController(
+        subjectController = new SubjectController(
                 subjectService,
                 addSubjectValidator,
                 editSubjectValidator,
@@ -117,8 +124,48 @@ public class Server implements IServer {
     }
 
     @Override
-    public void executeRequest(String endPoint, String json) {
+    public String executeRequest(String endPoint, String json) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        String result;
+        switch (endPoint) {
+            case "addGroup":
+                AddStudentGroupRequest addStudentGroupRequest = mapper.readValue(json, AddStudentGroupRequest.class);
+                result = mapper.writeValueAsString(groupController.addStudentGroup(addStudentGroupRequest));
+                break;
+            case "addStudent":
+                AddStudentRequest addStudentRequest = mapper.readValue(json, AddStudentRequest.class);
+                result = mapper.writeValueAsString(studentController.addStudent(addStudentRequest));
+                break;
+            case "getStudent":
+                result = mapper.writeValueAsString(studentController.getStudentById(mapper.readValue(json, IdRequest.class)));
+                break;
+            default:
+                result = "";
+        }
+        return result;
+    }
 
+    public static void main(String[] args) throws JsonProcessingException {
+        Server server = new Server();
+        String jsonStudent = new ObjectMapper().writeValueAsString(
+                new StudentDTO(
+                        null,
+                        "Mikual",
+                        "Gerhard",
+                        "Stanislavovich",
+                        StudentStatuses.STUDY,
+                        new GroupDTO(
+                                null,
+                                "MMB-104"
+                        )));
+        String json = new ObjectMapper().writeValueAsString(
+                new AddStudentGroupRequest(
+                        "MMB-104"
+                )
+        );
+
+        System.out.println(json);
+        System.out.println(server.executeRequest("addGroup", json));
     }
 
     /*public static void main(String[] args) {
