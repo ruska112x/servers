@@ -59,11 +59,12 @@ public class StudentRepository implements IStudentRepository {
     @Override
     public List<StudentDTO> getStudentsByGroupId(long groupId) throws RepositoryException {
         if (groupMap.containsKey(groupId)) {
-            var group = groupMap.get(groupId);
+            var groupDb = groupMap.get(groupId);
+            var group = new GroupDTO(groupId, groupDb.name());
             return studentMap.entrySet().stream().filter(x -> x.getValue().groupId() == groupId).map(
                     entry -> {
                         var student = entry.getValue();
-                        return new StudentDTO(entry.getKey(), student.surname(), student.name(), student.patronymic(), student.status(), new GroupDTO(groupId, group.name()));
+                        return new StudentDTO(entry.getKey(), student.surname(), student.name(), student.patronymic(), student.status(), group);
                     }
             ).collect(Collectors.toList());
         } else {

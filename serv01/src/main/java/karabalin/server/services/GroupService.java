@@ -1,6 +1,7 @@
 package karabalin.server.services;
 
 import karabalin.server.entities.Group;
+import karabalin.server.entities.GroupDTO;
 import karabalin.server.exceptions.NotFoundException;
 import karabalin.server.exceptions.RepositoryException;
 import karabalin.server.exceptions.ServiceException;
@@ -10,26 +11,26 @@ import karabalin.server.services.interfaces.IGroupService;
 import java.util.List;
 
 public class GroupService implements IGroupService {
-    private IGroupRepository groupsRepository;
+    private final IGroupRepository groupsRepository;
 
     public GroupService(IGroupRepository groupsRepository) {
         this.groupsRepository = groupsRepository;
     }
 
     @Override
-    public long addGroup(Group group) throws ServiceException {
+    public long addGroup(GroupDTO group) throws ServiceException {
         try {
-            return groupsRepository.add(new Group(null, group.getName()));
+            return groupsRepository.add(group);
         } catch (RepositoryException e) {
             throw new ServiceException(e.getMessage(), e);
         }
     }
 
     @Override
-    public void updateGroup(Group group) throws ServiceException {
+    public void updateGroup(GroupDTO group) throws ServiceException {
         try {
             if (groupsRepository.update(group) == null) {
-                throw new ServiceException("Group with id = " + group.getId() + " not found!");
+                throw new ServiceException("Group with id = " + group.id() + " not found!");
             }
         } catch (RepositoryException e) {
             throw new ServiceException(e.getMessage(), e);
@@ -46,16 +47,20 @@ public class GroupService implements IGroupService {
     }
 
     @Override
-    public Group getGroup(long id) throws ServiceException {
+    public GroupDTO getGroup(long id) throws ServiceException {
         try {
-            return groupsRepository.getById(id);
+            var result = groupsRepository.getById(id);
+            if (result == null) {
+                throw new ServiceException("Group with id = " + id + " not found!");
+            }
+            return result;
         } catch (RepositoryException e) {
             throw new ServiceException(e.getMessage(), e);
         }
     }
 
     @Override
-    public List<Group> getGroups() throws ServiceException {
+    public List<GroupDTO> getGroups() throws ServiceException {
         try {
             return groupsRepository.getAll();
         } catch (RepositoryException e) {

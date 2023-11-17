@@ -5,7 +5,6 @@ import karabalin.server.repositories.dbentities.GroupDB;
 import karabalin.server.exceptions.RepositoryException;
 import karabalin.server.repositories.interfaces.IGroupRepository;
 
-import javax.swing.*;
 import java.util.*;
 import java.util.stream.Collectors;
 

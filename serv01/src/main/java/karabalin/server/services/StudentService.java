@@ -1,9 +1,8 @@
 package karabalin.server.services;
 
-import karabalin.server.entities.Student;
+import karabalin.server.entities.StudentDTO;
 import karabalin.server.exceptions.RepositoryException;
 import karabalin.server.exceptions.ServiceException;
-import karabalin.server.repositories.interfaces.IGroupRepository;
 import karabalin.server.repositories.interfaces.IStudentRepository;
 import karabalin.server.services.interfaces.IStudentService;
 
@@ -18,7 +17,7 @@ public class StudentService implements IStudentService {
     }
 
     @Override
-    public long addStudent(Student student) throws ServiceException {
+    public long addStudent(StudentDTO student) throws ServiceException {
         try {
             return studentRepository.add(student);
         } catch (RepositoryException e) {
@@ -27,10 +26,10 @@ public class StudentService implements IStudentService {
     }
 
     @Override
-    public void updateStudent(Student student) throws ServiceException {
+    public void updateStudent(StudentDTO student) throws ServiceException {
         try {
             if (studentRepository.update(student) == null) {
-                throw new ServiceException("Group with id = " + student.getId() + " not found!");
+                throw new ServiceException("Group with id = " + student.id() + " not found!");
             }
         } catch (RepositoryException e) {
             throw new ServiceException(e.getMessage(), e);
@@ -47,22 +46,26 @@ public class StudentService implements IStudentService {
     }
 
     @Override
-    public Student getStudent(long id) throws ServiceException {
+    public StudentDTO getStudent(long id) throws ServiceException {
         try {
-            return studentRepository.getById(id);
+            var result = studentRepository.getById(id);
+            if (result == null) {
+                throw new ServiceException("Student with id = " + id + " not found!");
+            }
+            return result;
         } catch (RepositoryException e) {
             throw new ServiceException(e.getMessage(), e);
         }
     }
 
     @Override
-    public List<Student> getStudentsByGroupId(long groupId) throws ServiceException {
+    public List<StudentDTO> getStudentsByGroupId(long groupId) throws ServiceException {
         try {
-            var reslut = studentRepository.getStudentsByGroupId(groupId);
-            if (reslut == null) {
+            var result = studentRepository.getStudentsByGroupId(groupId);
+            if (result == null) {
                 throw new ServiceException("Group with id = " + groupId + " not found!");
             } else {
-                return reslut;
+                return result;
             }
         } catch (RepositoryException e) {
             throw new ServiceException(e.getMessage(), e);
