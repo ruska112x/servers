@@ -1,4 +1,4 @@
 package karabalin.server.requests.student;
 
-public record AddStudentRequest(String patronymic, String surname, String name, Long groupId, String status) {
+public record AddStudentRequest(String surname, String name, String patronymic, Long groupId, String status) {
 }

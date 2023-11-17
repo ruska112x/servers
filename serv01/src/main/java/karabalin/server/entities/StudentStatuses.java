@@ -1,8 +1,8 @@
 package karabalin.server.entities;
 
 public class StudentStatuses {
-    public final String STUDY = "study";
-    public final String VACATION = "vacation";
+    public static final String STUDY = "study";
+    public static final String VACATION = "vacation";
 
-    public final String QUIT = "quit";
+    public static final String QUIT = "quit";
 }

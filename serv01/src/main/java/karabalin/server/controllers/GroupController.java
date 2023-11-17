@@ -1,7 +1,7 @@
 package karabalin.server.controllers;
 
+import karabalin.server.entities.GroupDTO;
 import karabalin.server.responses.CommonResponse;
-import karabalin.server.entities.Group;
 import karabalin.server.requests.IdRequest;
 import karabalin.server.requests.group.AddStudentGroupRequest;
 import karabalin.server.requests.group.EditStudentGroupRequest;
@@ -32,10 +32,10 @@ public class GroupController {
         this.idRequestValidator = idRequestValidator;
     }
 
-    public ResponseEntity<CommonResponse<List<Group>>> getStudentGroups() {
+    public ResponseEntity<CommonResponse<List<GroupDTO>>> getStudentGroups() {
         var problems = new ArrayList<String>();
         long status = 200L;
-        CommonResponse<List<Group>> response;
+        CommonResponse<List<GroupDTO>> response;
         try {
             var groupList = groupService.getGroups();
             response = new CommonResponse<>(groupList);
@@ -46,10 +46,10 @@ public class GroupController {
         return new ResponseEntity<>(response, status);
     }
 
-    public ResponseEntity<CommonResponse<Group>> getStudentGroupById(IdRequest idRequest) {
+    public ResponseEntity<CommonResponse<GroupDTO>> getStudentGroupById(IdRequest idRequest) {
         var problems = idRequestValidator.validate(idRequest);
         long status = 200L;
-        CommonResponse<Group> response;
+        CommonResponse<GroupDTO> response;
         if (problems.isEmpty()) {
             try {
                 var group = groupService.getGroup(idRequest.id());
@@ -71,7 +71,7 @@ public class GroupController {
         CommonResponse<Long> response;
         if (problems.isEmpty()) {
             try {
-                var id = groupService.addGroup(new Group(null, addStudentGroupRequest.getName()));
+                var id = groupService.addGroup(new GroupDTO(null, addStudentGroupRequest.getName()));
                 response = new CommonResponse<>(id);
             } catch (Exception e) {
                 status = 422L;
@@ -90,7 +90,7 @@ public class GroupController {
         CommonResponse<Long> response;
         if (problems.isEmpty()) {
             try {
-                groupService.updateGroup(new Group(editStudentGroupRequest.id(), editStudentGroupRequest.name()));
+                groupService.updateGroup(new GroupDTO(editStudentGroupRequest.id(), editStudentGroupRequest.name()));
                 response = new CommonResponse<>(editStudentGroupRequest.id());
             } catch (Exception e) {
                 status = 404L;

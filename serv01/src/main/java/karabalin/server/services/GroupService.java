@@ -1,8 +1,6 @@
 package karabalin.server.services;
 
-import karabalin.server.entities.Group;
 import karabalin.server.entities.GroupDTO;
-import karabalin.server.exceptions.NotFoundException;
 import karabalin.server.exceptions.RepositoryException;
 import karabalin.server.exceptions.ServiceException;
 import karabalin.server.repositories.interfaces.IGroupRepository;
