@@ -145,6 +145,8 @@ public class Server implements IServer {
         return result;
     }
 
+    // TODO: 11/22/23 Map<EndPoint, Command> Command.execute() contains controller call
+
     public static void main(String[] args) throws JsonProcessingException {
         Server server = new Server();
         String jsonStudent = new ObjectMapper().writeValueAsString(
