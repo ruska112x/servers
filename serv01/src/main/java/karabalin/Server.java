@@ -128,7 +128,7 @@ public class Server implements IServer {
         commands.put("addGroup", new AddGroupCommand(groupController, mapper));
         commands.put("deleteGroup", new DeleteStudentGroupCommand(groupController, mapper));
         commands.put("editGroup", new EditStudentGroupCommand(groupController, mapper));
-        commands.put("getGroupByID", new GetStudentGroupByIdCommand(groupController, mapper));
+        commands.put("getGroupById", new GetStudentGroupByIdCommand(groupController, mapper));
         commands.put("getGroups", new GetStudentGroupsCommand(groupController, mapper));
 
         commands.put("addStudent", new AddStudentCommand(studentController, mapper));
