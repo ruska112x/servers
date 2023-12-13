@@ -1,7 +1,8 @@
-package karabalin.commands;
+package karabalin.commands.student;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import karabalin.commands.ICommand;
 import karabalin.server.controllers.StudentController;
 import karabalin.server.requests.student.AddStudentRequest;
 

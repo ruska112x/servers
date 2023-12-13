@@ -3,6 +3,8 @@ package karabalin;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import karabalin.commands.*;
+import karabalin.commands.group.*;
+import karabalin.commands.student.*;
 import karabalin.server.IServer;
 import karabalin.server.controllers.GroupController;
 import karabalin.server.controllers.StudentController;
@@ -122,9 +124,18 @@ public class Server implements IServer {
         mapper = new ObjectMapper();
 
         commands = new HashMap<>();
+
         commands.put("addGroup", new AddGroupCommand(groupController, mapper));
+        commands.put("deleteGroup", new DeleteStudentGroupCommand(groupController, mapper));
+        commands.put("editGroup", new EditStudentGroupCommand(groupController, mapper));
+        commands.put("getGroupByID", new GetStudentGroupByIdCommand(groupController, mapper));
+        commands.put("getGroups", new GetStudentGroupsCommand(groupController, mapper));
+
         commands.put("addStudent", new AddStudentCommand(studentController, mapper));
+        commands.put("deleteStudent", new DeleteStudentCommand(studentController, mapper));
+        commands.put("editStudent", new EditStudentCommand(studentController, mapper));
         commands.put("getStudent", new GetStudentCommand(studentController, mapper));
+        commands.put("getStudentsByGroupId", new GetStudentsByGroupIdCommand(studentController, mapper));
     }
 
     @Override
