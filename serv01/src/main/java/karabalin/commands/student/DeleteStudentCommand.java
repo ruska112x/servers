@@ -19,7 +19,7 @@ public class DeleteStudentCommand implements ICommand {
     }
 
     @Override
-    public String execute(String json) throws JsonProcessingException {
+    public String executeToJSON(String json) throws JsonProcessingException {
         return mapper.writeValueAsString(studentController.deleteStudent(mapper.readValue(json, IdRequest.class)));
     }
 }

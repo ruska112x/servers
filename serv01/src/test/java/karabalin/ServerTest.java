@@ -29,6 +29,18 @@ class ServerTest {
     }
 
     @Test
+    void testServerBadRequest() throws JsonProcessingException {
+        String expected = mapper.writeValueAsString(
+                new ResponseEntity<>(
+                        "Bad Request",
+                        400L
+                )
+        );
+        String result = server.executeRequest("smth", "");
+        assertEquals(expected, result);
+    }
+
+    @Test
     void testServerAddGroup() throws JsonProcessingException {
         String expected = mapper.writeValueAsString(
                 new ResponseEntity<>(

@@ -17,7 +17,7 @@ public class GetStudentCommand implements ICommand {
     }
 
     @Override
-    public String execute(String json) throws JsonProcessingException {
+    public String executeToJSON(String json) throws JsonProcessingException {
         return mapper.writeValueAsString(studentController.getStudentById(mapper.readValue(json, IdRequest.class)));
     }
 }

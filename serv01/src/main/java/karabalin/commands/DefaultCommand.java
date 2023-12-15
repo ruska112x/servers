@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 public class DefaultCommand implements ICommand {
     @Override
-    public String execute(String json) throws JsonProcessingException {
-        return "No such EndPoint!";
+    public String executeToJSON(String json) throws JsonProcessingException {
+        return "{\"body\":\"Bad Request\",\"httpStatus\":400}";
     }
 }
