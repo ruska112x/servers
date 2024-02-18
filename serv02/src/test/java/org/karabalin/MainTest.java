@@ -1,6 +1,7 @@
 package org.karabalin;
 
 import org.junit.Test;
+import org.karabalin.fifth.FifthThread;
 import org.karabalin.forth.AddingThread;
 import org.karabalin.forth.SubtractingThread;
 import org.karabalin.third.MyThread1;
@@ -64,7 +65,7 @@ public class MainTest {
     @Test
     public void forthTask() {
         List<Integer> integers = new ArrayList<>();
-        
+
         AddingThread addingThread = new AddingThread(integers);
         addingThread.start();
         try {
@@ -82,5 +83,20 @@ public class MainTest {
             throw new RuntimeException(e);
         }
         System.out.println(integers);
+    }
+
+    @Test
+    public void fifthTask() {
+        List<Integer> integers = new ArrayList<>();
+
+        FifthThread fifthThread = new FifthThread(integers);
+
+        fifthThread.start();
+
+        try {
+            fifthThread.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
