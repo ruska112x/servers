@@ -4,14 +4,16 @@ import org.junit.Test;
 import org.karabalin.fifth.FifthThread;
 import org.karabalin.forth.AddingThread;
 import org.karabalin.forth.SubtractingThread;
+import org.karabalin.seventh.PingThread;
+import org.karabalin.seventh.PongThread;
 import org.karabalin.sixth.SixthThread;
 import org.karabalin.third.MyThread1;
 import org.karabalin.third.MyThread2;
 import org.karabalin.third.MyThread3;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MainTest {
 
@@ -113,5 +115,17 @@ public class MainTest {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Test
+    public void seventhTask() {
+        Object lock = new Object();
+        AtomicBoolean o = new AtomicBoolean(true);
+
+        PingThread pingThread = new PingThread(lock, o);
+        PongThread pongThread = new PongThread(lock, o);
+
+        pingThread.start();
+        pongThread.start();
     }
 }

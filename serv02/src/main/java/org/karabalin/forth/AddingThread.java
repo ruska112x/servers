@@ -13,7 +13,6 @@ public class AddingThread extends Thread {
 
     @Override
     public void run() {
-        super.run();
         synchronized (integers) {
             for (int i = 0; i < 10000; i++) {
                 integers.add(random.nextInt());

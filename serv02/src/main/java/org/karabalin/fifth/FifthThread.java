@@ -29,8 +29,6 @@ public class FifthThread extends Thread {
 
     @Override
     public void run() {
-        super.run();
-
         this.adding();
         System.out.println(integers.size());
 

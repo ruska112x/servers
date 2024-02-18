@@ -9,7 +9,6 @@ public class SixthThread extends Thread {
 
     @Override
     public void run() {
-        super.run();
         List<Integer> integers = Collections.synchronizedList(new ArrayList<>());
 
         for (int i = 0; i < 10000; i++) {

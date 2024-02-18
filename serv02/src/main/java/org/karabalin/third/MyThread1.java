@@ -10,7 +10,6 @@ public class MyThread1 extends Thread {
 
     @Override
     public void run() {
-        super.run();
         System.out.println("Run method from " + name);
         try {
             Thread.sleep(3000);
