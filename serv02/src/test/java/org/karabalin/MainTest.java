@@ -1,6 +1,9 @@
 package org.karabalin;
 
 import org.junit.Test;
+import org.karabalin.third.MyThread1;
+import org.karabalin.third.MyThread2;
+import org.karabalin.third.MyThread3;
 
 public class MainTest {
 
@@ -34,5 +37,22 @@ public class MainTest {
 
     @Test
     public void thirdTask() {
+        MyThread1 myThread1 = new MyThread1("1");
+        MyThread2 myThread2 = new MyThread2("2");
+        MyThread3 myThread3 = new MyThread3("3");
+
+        myThread1.start();
+        myThread2.start();
+        myThread3.start();
+
+        try {
+            myThread1.join();
+            myThread2.join();
+            myThread3.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println("End");
     }
 }
