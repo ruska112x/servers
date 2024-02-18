@@ -1,9 +1,14 @@
 package org.karabalin;
 
 import org.junit.Test;
+import org.karabalin.forth.AddingThread;
+import org.karabalin.forth.SubtractingThread;
 import org.karabalin.third.MyThread1;
 import org.karabalin.third.MyThread2;
 import org.karabalin.third.MyThread3;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainTest {
 
@@ -54,5 +59,28 @@ public class MainTest {
         }
 
         System.out.println("End");
+    }
+
+    @Test
+    public void forthTask() {
+        List<Integer> integers = new ArrayList<>();
+        
+        AddingThread addingThread = new AddingThread(integers);
+        addingThread.start();
+        try {
+            addingThread.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(integers);
+
+        SubtractingThread subtractingThread = new SubtractingThread(integers);
+        subtractingThread.start();
+        try {
+            subtractingThread.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(integers);
     }
 }
