@@ -32,9 +32,9 @@ public class FifthThread extends Thread {
         super.run();
 
         this.adding();
-        System.out.println(integers);
+        System.out.println(integers.size());
 
         this.subtracting();
-        System.out.println(integers);
+        System.out.println(integers.size());
     }
 }

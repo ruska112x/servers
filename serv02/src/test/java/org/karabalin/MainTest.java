@@ -4,11 +4,13 @@ import org.junit.Test;
 import org.karabalin.fifth.FifthThread;
 import org.karabalin.forth.AddingThread;
 import org.karabalin.forth.SubtractingThread;
+import org.karabalin.sixth.SixthThread;
 import org.karabalin.third.MyThread1;
 import org.karabalin.third.MyThread2;
 import org.karabalin.third.MyThread3;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainTest {
@@ -73,7 +75,7 @@ public class MainTest {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(integers);
+        System.out.println(integers.size());
 
         SubtractingThread subtractingThread = new SubtractingThread(integers);
         subtractingThread.start();
@@ -82,7 +84,7 @@ public class MainTest {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(integers);
+        System.out.println(integers.size());
     }
 
     @Test
@@ -95,6 +97,19 @@ public class MainTest {
 
         try {
             fifthThread.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void sixthTask() {
+        SixthThread sixthThread = new SixthThread();
+
+        sixthThread.start();
+
+        try {
+            sixthThread.join();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
