@@ -2,16 +2,17 @@ package org.karabalin.task8;
 
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class AddingThreadWithLock extends Thread {
 
-    private final ReentrantLock lock;
+    private final Lock lock;
 
     private final List<Integer> integers;
     private final Random random = new Random();
 
-    public AddingThreadWithLock(ReentrantLock lock, List<Integer> integers) {
+    public AddingThreadWithLock(Lock lock, List<Integer> integers) {
         this.lock = lock;
         this.integers = integers;
     }

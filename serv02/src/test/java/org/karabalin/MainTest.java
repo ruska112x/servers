@@ -12,6 +12,7 @@ import org.karabalin.task7.PingThread;
 import org.karabalin.task7.PongThread;
 import org.karabalin.task8.AddingThreadWithLock;
 import org.karabalin.task8.SubtractingThreadWithLock;
+import org.karabalin.task9.PingPongThread;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -154,5 +155,18 @@ public class MainTest {
             throw new RuntimeException(e);
         }
         System.out.println(integers.size());
+    }
+
+    @Test
+    public void ninthTask() {
+        PingPongThread pingPongThread = new PingPongThread(new ReentrantLock());
+
+        pingPongThread.start();
+
+        try {
+            pingPongThread.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
