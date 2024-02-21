@@ -3,7 +3,6 @@ package org.karabalin.task8;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class SubtractingThreadWithLock extends Thread {
 
