@@ -1,4 +1,4 @@
-package org.karabalin.third;
+package org.karabalin.task3;
 
 public class MyThread1 extends Thread {
 

@@ -1,19 +1,22 @@
 package org.karabalin;
 
 import org.junit.Test;
-import org.karabalin.fifth.FifthThread;
-import org.karabalin.forth.AddingThread;
-import org.karabalin.forth.SubtractingThread;
-import org.karabalin.seventh.PingThread;
-import org.karabalin.seventh.PongThread;
-import org.karabalin.sixth.SixthThread;
-import org.karabalin.third.MyThread1;
-import org.karabalin.third.MyThread2;
-import org.karabalin.third.MyThread3;
+import org.karabalin.task3.MyThread1;
+import org.karabalin.task3.MyThread2;
+import org.karabalin.task3.MyThread3;
+import org.karabalin.task4.AddingThread;
+import org.karabalin.task4.SubtractingThread;
+import org.karabalin.task5.FifthThread;
+import org.karabalin.task6.SixthThread;
+import org.karabalin.task7.PingThread;
+import org.karabalin.task7.PongThread;
+import org.karabalin.task8.AddingThreadWithLock;
+import org.karabalin.task8.SubtractingThreadWithLock;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class MainTest {
 
@@ -127,5 +130,29 @@ public class MainTest {
 
         pingThread.start();
         pongThread.start();
+    }
+
+    @Test
+    public void eighthTask() {
+        List<Integer> integers = new ArrayList<>();
+        ReentrantLock lock = new ReentrantLock();
+
+        AddingThreadWithLock addingThread = new AddingThreadWithLock(lock, integers);
+        addingThread.start();
+        try {
+            addingThread.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(integers.size());
+
+        SubtractingThreadWithLock subtractingThread = new SubtractingThreadWithLock(lock, integers);
+        subtractingThread.start();
+        try {
+            subtractingThread.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(integers.size());
     }
 }

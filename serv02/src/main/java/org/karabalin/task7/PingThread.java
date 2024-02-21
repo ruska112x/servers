@@ -1,13 +1,13 @@
-package org.karabalin.seventh;
+package org.karabalin.task7;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class PongThread extends Thread {
+public class PingThread extends Thread {
 
     private final Object lock;
     private AtomicBoolean flag;
 
-    public PongThread(Object lock, AtomicBoolean flag) {
+    public PingThread(Object lock, AtomicBoolean flag) {
         this.lock = lock;
         this.flag = flag;
     }
@@ -16,15 +16,15 @@ public class PongThread extends Thread {
     public void run() {
         while (true) {
             synchronized (lock) {
-                while (flag.get()) {
+                while (!flag.get()) {
                     try {
                         lock.wait();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
-                System.out.println("pong");
-                flag.set(true);
+                System.out.println("ping");
+                flag.set(false);
                 lock.notify();
             }
         }

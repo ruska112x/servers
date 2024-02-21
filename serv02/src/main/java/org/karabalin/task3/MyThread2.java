@@ -1,10 +1,10 @@
-package org.karabalin.third;
+package org.karabalin.task3;
 
-public class MyThread3 extends Thread {
+public class MyThread2 extends Thread {
 
     private final String name;
 
-    public MyThread3(String name) {
+    public MyThread2(String name) {
         this.name = name;
     }
 

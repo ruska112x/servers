@@ -1,23 +1,31 @@
-package org.karabalin.forth;
+package org.karabalin.task8;
 
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.locks.ReentrantLock;
 
-public class AddingThread extends Thread {
+public class AddingThreadWithLock extends Thread {
+
+    private final ReentrantLock lock;
 
     private final List<Integer> integers;
     private final Random random = new Random();
-    public AddingThread(List<Integer> integers) {
+
+    public AddingThreadWithLock(ReentrantLock lock, List<Integer> integers) {
+        this.lock = lock;
         this.integers = integers;
     }
 
     @Override
     public void run() {
-        synchronized (integers) {
+        lock.lock();
+        try {
             for (int i = 0; i < 10000; i++) {
                 integers.add(random.nextInt());
                 System.out.println(integers);
             }
+        } finally {
+            lock.unlock();
         }
     }
 }

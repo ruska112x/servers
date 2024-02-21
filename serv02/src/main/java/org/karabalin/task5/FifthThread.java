@@ -1,4 +1,4 @@
-package org.karabalin.fifth;
+package org.karabalin.task5;
 
 import java.util.List;
 import java.util.Random;
