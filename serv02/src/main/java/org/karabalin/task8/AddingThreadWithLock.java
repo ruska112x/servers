@@ -20,7 +20,7 @@ public class AddingThreadWithLock extends Thread {
     public void run() {
         lock.lock();
         try {
-            for (int i = 0; i < 10000; i++) {
+            for (int i = 0; i < 10000; ++i) {
                 integers.add(random.nextInt());
                 System.out.println(integers);
             }

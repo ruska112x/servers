@@ -14,7 +14,7 @@ public class SixthThread extends Thread {
     public void run() {
         List<Integer> integers = Collections.synchronizedList(new ArrayList<>());
 
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 10000; ++i) {
             integers.add(random.nextInt());
             System.out.println(integers);
         }

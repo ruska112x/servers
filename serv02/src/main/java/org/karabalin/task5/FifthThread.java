@@ -14,7 +14,7 @@ public class FifthThread extends Thread {
     }
 
     public synchronized void adding() {
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 10000; ++i) {
             integers.add(random.nextInt());
             System.out.println(integers);
         }
@@ -23,7 +23,7 @@ public class FifthThread extends Thread {
     public synchronized void subtracting() {
         int i = 10000;
         while (i != 0) {
-            integers.remove(random.nextInt(0, i--));
+            integers.remove(random.nextInt(0, --i));
         }
     }
 
