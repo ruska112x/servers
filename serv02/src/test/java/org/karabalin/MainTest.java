@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static org.junit.Assert.assertEquals;
+
 public class MainTest {
 
     @Test
@@ -75,22 +77,16 @@ public class MainTest {
         List<Integer> integers = new ArrayList<>();
 
         AddingThread addingThread = new AddingThread(integers);
-        addingThread.start();
-        try {
-            addingThread.join();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println(integers.size());
-
         SubtractingThread subtractingThread = new SubtractingThread(integers);
+        addingThread.start();
         subtractingThread.start();
         try {
+            addingThread.join();
             subtractingThread.join();
+            assertEquals(integers.size(), 0);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(integers.size());
     }
 
     @Test

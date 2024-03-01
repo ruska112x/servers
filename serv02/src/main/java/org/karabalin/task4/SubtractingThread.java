@@ -14,10 +14,9 @@ public class SubtractingThread extends Thread {
 
     @Override
     public void run() {
-        synchronized (integers) {
-            int i = 10000;
-            while (i != 0) {
-                integers.remove(random.nextInt(0, i--));
+        while (!integers.isEmpty()) {
+            synchronized (integers) {
+                integers.remove(random.nextInt(0, integers.size()));
             }
         }
     }
