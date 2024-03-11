@@ -14,9 +14,11 @@ public class AddingThread extends Thread {
 
     @Override
     public void run() {
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 10000; ++i) {
             synchronized (integers) {
                 integers.add(random.nextInt());
+                System.out.println("A" + i);
+                integers.notify();
             }
         }
     }

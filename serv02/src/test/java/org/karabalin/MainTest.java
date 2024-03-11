@@ -83,7 +83,7 @@ public class MainTest {
         try {
             addingThread.join();
             subtractingThread.join();
-            assertEquals(integers.size(), 0);
+        assertEquals(0, integers.size());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

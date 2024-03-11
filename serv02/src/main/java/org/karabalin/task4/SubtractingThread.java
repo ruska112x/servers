@@ -14,9 +14,17 @@ public class SubtractingThread extends Thread {
 
     @Override
     public void run() {
-        while (!integers.isEmpty()) {
+        for (int i = 10000; i > 0; i--) {
             synchronized (integers) {
-                integers.remove(random.nextInt(0, integers.size()));
+                if (integers.isEmpty()) {
+                    try {
+                        integers.wait();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                integers.remove(random.nextInt(integers.size()));
+                System.out.println("D" + i);
             }
         }
     }
