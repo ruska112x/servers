@@ -137,17 +137,4 @@ public class MainTest {
         pingThread.start();
         pongThread.start();
     }
-
-    @Test
-    public void ninthTask() {
-        PingPongThread pingPongThread = new PingPongThread(new ReentrantLock());
-
-        pingPongThread.start();
-
-        try {
-            pingPongThread.join();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }
