@@ -15,9 +15,9 @@ public class FifthThread extends Thread {
     public void run() {
         if (add) {
             for (int i = 0; i < 10000; ++i) {
+                fifthTask.adding();
+                System.out.println("A" + i);
                 synchronized (fifthTask) {
-                    fifthTask.adding();
-                    System.out.println("A" + i);
                     fifthTask.notify();
                 }
             }
@@ -31,9 +31,9 @@ public class FifthThread extends Thread {
                             throw new RuntimeException(e);
                         }
                     }
-                    fifthTask.subtracting();
-                    System.out.println("D" + i);
                 }
+                fifthTask.subtracting();
+                System.out.println("D" + i);
             }
         }
     }
