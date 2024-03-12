@@ -1,13 +1,12 @@
-package org.karabalin.task5;
+package org.karabalin.task6;
 
-public class FifthThread extends Thread {
-
-    private final FifthTask fifthTask;
+public class SixthThread extends Thread {
+    private final SixthTask sixthTask;
 
     private boolean add;
 
-    public FifthThread(FifthTask fifthTask, boolean add) {
-        this.fifthTask = fifthTask;
+    public SixthThread(SixthTask sixthTask, boolean add) {
+        this.sixthTask = sixthTask;
         this.add = add;
     }
 
@@ -15,23 +14,23 @@ public class FifthThread extends Thread {
     public void run() {
         if (add) {
             for (int i = 0; i < 10000; ++i) {
-                synchronized (fifthTask) {
-                    fifthTask.adding();
+                synchronized (sixthTask) {
+                    sixthTask.adding();
                     System.out.println("A" + i);
-                    fifthTask.notify();
+                    sixthTask.notify();
                 }
             }
         } else {
             for (int i = 0; i < 10000; ++i) {
-                synchronized (fifthTask) {
-                    if (fifthTask.isEmpty()) {
+                synchronized (sixthTask) {
+                    if (sixthTask.isEmpty()) {
                         try {
-                            fifthTask.wait();
+                            sixthTask.wait();
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
                     }
-                    fifthTask.subtracting();
+                    sixthTask.subtracting();
                     System.out.println("D" + i);
                 }
             }

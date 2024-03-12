@@ -1,22 +1,21 @@
-package org.karabalin.task5;
+package org.karabalin.task6;
 
 import java.util.List;
 import java.util.Random;
 
-public class FifthTask {
-
+public class SixthTask {
     private final List<Integer> integers;
     private final Random random = new Random();
 
-    public FifthTask(List<Integer> integers) {
+    public SixthTask(List<Integer> integers) {
         this.integers = integers;
     }
 
-    public synchronized void adding() {
+    public void adding() {
         integers.add(random.nextInt());
     }
 
-    public synchronized void subtracting() {
+    public void subtracting() {
         if (!integers.isEmpty()) {
             integers.remove(random.nextInt(integers.size()));
         }
