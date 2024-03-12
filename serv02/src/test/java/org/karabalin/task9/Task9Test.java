@@ -89,7 +89,7 @@ public class Task9Test {
         Condition pong = reentrantLock.newCondition();
         AtomicBoolean atomicBoolean = new AtomicBoolean(true);
         PingThread pingThread = new PingThread(reentrantLock, ping, pong, atomicBoolean);
-        PongThread pongThread =new PongThread(reentrantLock, ping, pong, atomicBoolean);
+        PongThread pongThread = new PongThread(reentrantLock, ping, pong, atomicBoolean);
         pingThread.start();
         pongThread.start();
         try {

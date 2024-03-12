@@ -12,14 +12,11 @@ import org.karabalin.task6.SixthTask;
 import org.karabalin.task6.SixthThread;
 import org.karabalin.task7.PingThread;
 import org.karabalin.task7.PongThread;
-import org.karabalin.task9.PingPongThread;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import static org.junit.Assert.assertEquals;
 
