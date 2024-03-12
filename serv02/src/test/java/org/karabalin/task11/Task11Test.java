@@ -11,14 +11,16 @@ import static org.junit.Assert.assertTrue;
 class DateThread extends Thread {
     private Formatter formatter;
 
-    public DateThread(Formatter formatter) {
+    private Date date;
+
+    public DateThread(Formatter formatter, Date date) {
         this.formatter = formatter;
+        this.date = date;
     }
 
     @Override
     public void run() {
-        Date currentDate = new Date();
-        String formattedDate = formatter.format(currentDate);
+        String formattedDate = formatter.format(date);
         System.out.println(Thread.currentThread().getName() + ": " + formattedDate);
     }
 }
@@ -26,12 +28,12 @@ class DateThread extends Thread {
 public class Task11Test {
     @Test
     public void eleventhTask() {
-        Formatter formatter = new Formatter("yyyy-MM-dd HH:mm:ss");
+        Formatter formatter = new Formatter("dd.MM.yyyy :: HH:mm:ss");
 
         ExecutorService executorService = Executors.newFixedThreadPool(5);
 
         for (int i = 0; i < 5; i++) {
-            executorService.submit(new DateThread(formatter));
+            executorService.submit(new DateThread(formatter, new Date()));
         }
         executorService.shutdown();
         assertTrue(executorService.isShutdown());

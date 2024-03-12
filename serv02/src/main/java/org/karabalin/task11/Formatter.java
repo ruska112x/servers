@@ -9,7 +9,7 @@ public class Formatter {
 
     public Formatter(String pattern) {
         if (pattern == null) {
-            pattern = "yyyy-MM-dd HH:mm:ss";
+            pattern = "dd.MM.yyyy - HH:mm:ss";
         }
         dateFormat = new SimpleDateFormat(pattern);
     }
