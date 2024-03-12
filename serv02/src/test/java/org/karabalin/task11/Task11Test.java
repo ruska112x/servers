@@ -3,10 +3,6 @@ package org.karabalin.task11;
 import org.junit.Test;
 
 import java.util.Date;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import static org.junit.Assert.assertTrue;
 
 class DateThread extends Thread {
     private Formatter formatter;
@@ -30,12 +26,26 @@ public class Task11Test {
     public void eleventhTask() {
         Formatter formatter = new Formatter("dd.MM.yyyy :: HH:mm:ss");
 
-        ExecutorService executorService = Executors.newFixedThreadPool(5);
+        Thread thread1 = new DateThread(formatter, new Date(1, 1, 1));
+        Thread thread2 = new DateThread(formatter, new Date(2, 2, 2));
+        Thread thread3 = new DateThread(formatter, new Date(3, 3, 3));
+        Thread thread4 = new DateThread(formatter, new Date(4, 4, 4));
+        Thread thread5 = new DateThread(formatter, new Date(5, 5, 5));
 
-        for (int i = 0; i < 5; i++) {
-            executorService.submit(new DateThread(formatter, new Date()));
+        thread1.start();
+        thread2.start();
+        thread3.start();
+        thread4.start();
+        thread5.start();
+
+        try {
+            thread1.join();
+            thread2.join();
+            thread3.join();
+            thread4.join();
+            thread5.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
-        executorService.shutdown();
-        assertTrue(executorService.isShutdown());
     }
 }
