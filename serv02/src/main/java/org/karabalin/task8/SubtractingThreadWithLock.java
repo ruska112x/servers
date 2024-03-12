@@ -18,14 +18,16 @@ public class SubtractingThreadWithLock extends Thread {
 
     @Override
     public void run() {
-        lock.lock();
-        try {
-            int i = 10000;
-            while (i != 0) {
-                integers.remove(random.nextInt(0, i--));
+        for (int i = 0; i < 10000; ++i) {
+            lock.lock();
+            try {
+                if (!integers.isEmpty()) {
+                    integers.remove(random.nextInt(integers.size()));
+                    System.out.println("D" + i);
+                }
+            } finally {
+                lock.unlock();
             }
-        } finally {
-            lock.unlock();
         }
     }
 }

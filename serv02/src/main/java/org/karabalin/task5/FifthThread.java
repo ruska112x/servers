@@ -1,38 +1,41 @@
 package org.karabalin.task5;
 
-import java.util.List;
-import java.util.Random;
-
 public class FifthThread extends Thread {
 
-    private final List<Integer> integers;
-    private final Random random = new Random();
+    private final FifthTask fifthTask;
+
+    private boolean add;
 
 
-    public FifthThread(List<Integer> integers) {
-        this.integers = integers;
-    }
-
-    public synchronized void adding() {
-        for (int i = 0; i < 10000; ++i) {
-            integers.add(random.nextInt());
-            System.out.println(integers);
-        }
-    }
-
-    public synchronized void subtracting() {
-        int i = 10000;
-        while (i != 0) {
-            integers.remove(random.nextInt(0, --i));
-        }
+    public FifthThread(FifthTask fifthTask, boolean add) {
+        this.fifthTask = fifthTask;
+        this.add = add;
     }
 
     @Override
     public void run() {
-        this.adding();
-        System.out.println(integers.size());
-
-        this.subtracting();
-        System.out.println(integers.size());
+        if (add) {
+            for (int i = 0; i < 10000; ++i) {
+                synchronized (fifthTask) {
+                    fifthTask.adding();
+                    System.out.println("A" + i);
+                    fifthTask.notify();
+                }
+            }
+        } else {
+            for (int i = 0; i < 10000; ++i) {
+                synchronized (fifthTask) {
+                    if (fifthTask.isEmpty()) {
+                        try {
+                            fifthTask.wait();
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    fifthTask.subtracting();
+                    System.out.println("D" + i);
+                }
+            }
+        }
     }
 }

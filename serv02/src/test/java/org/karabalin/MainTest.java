@@ -6,8 +6,10 @@ import org.karabalin.task3.MyThread2;
 import org.karabalin.task3.MyThread3;
 import org.karabalin.task4.AddingThread;
 import org.karabalin.task4.SubtractingThread;
+import org.karabalin.task5.FifthTask;
 import org.karabalin.task5.FifthThread;
-import org.karabalin.task6.SixthThread;
+import org.karabalin.task6.SixthAddThread;
+import org.karabalin.task6.SixthSubThread;
 import org.karabalin.task7.PingThread;
 import org.karabalin.task7.PongThread;
 import org.karabalin.task8.AddingThreadWithLock;
@@ -15,7 +17,9 @@ import org.karabalin.task8.SubtractingThreadWithLock;
 import org.karabalin.task9.PingPongThread;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -83,7 +87,7 @@ public class MainTest {
         try {
             addingThread.join();
             subtractingThread.join();
-        assertEquals(0, integers.size());
+            assertEquals(0, integers.size());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -92,13 +96,16 @@ public class MainTest {
     @Test
     public void fifthTask() {
         List<Integer> integers = new ArrayList<>();
+        FifthTask fifthTask = new FifthTask(integers);
 
-        FifthThread fifthThread = new FifthThread(integers);
-
-        fifthThread.start();
-
+        Thread addingThread = new FifthThread(fifthTask, true);
+        Thread subtractingThread = new FifthThread(fifthTask, false);
+        addingThread.start();
+        subtractingThread.start();
         try {
-            fifthThread.join();
+            addingThread.join();
+            subtractingThread.join();
+            assertEquals(0, integers.size());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -106,12 +113,15 @@ public class MainTest {
 
     @Test
     public void sixthTask() {
-        SixthThread sixthThread = new SixthThread();
-
-        sixthThread.start();
-
+        List<Integer> integers = Collections.synchronizedList(new ArrayList<>());
+        SixthAddThread addingThread = new SixthAddThread(integers);
+        SixthSubThread subtractingThread = new SixthSubThread(integers);
+        addingThread.start();
+        subtractingThread.start();
         try {
-            sixthThread.join();
+            addingThread.join();
+            subtractingThread.join();
+            assertEquals(0, integers.size());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -135,22 +145,16 @@ public class MainTest {
         ReentrantLock lock = new ReentrantLock();
 
         AddingThreadWithLock addingThread = new AddingThreadWithLock(lock, integers);
-        addingThread.start();
-        try {
-            addingThread.join();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println(integers.size());
-
         SubtractingThreadWithLock subtractingThread = new SubtractingThreadWithLock(lock, integers);
+        addingThread.start();
         subtractingThread.start();
         try {
+            addingThread.join();
             subtractingThread.join();
+            assertEquals(0, integers.size());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(integers.size());
     }
 
     @Test
