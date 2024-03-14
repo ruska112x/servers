@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -17,8 +18,11 @@ class AddingThreadWithLock extends Thread {
     private final List<Integer> integers;
     private final Random random = new Random();
 
-    public AddingThreadWithLock(Lock lock, List<Integer> integers) {
+    private final Condition condition;
+
+    public AddingThreadWithLock(Lock lock, Condition condition, List<Integer> integers) {
         this.lock = lock;
+        this.condition = condition;
         this.integers = integers;
     }
 
@@ -27,11 +31,9 @@ class AddingThreadWithLock extends Thread {
         for (int i = 0; i < 10000; ++i) {
             lock.lock();
             try {
-                synchronized (integers) {
-                    System.out.println("A" + i);
-                    integers.add(random.nextInt());
-                    integers.notify();
-                }
+                integers.add(random.nextInt());
+                System.out.println("A" + i);
+                condition.signal();
             } finally {
                 lock.unlock();
             }
@@ -42,30 +44,30 @@ class AddingThreadWithLock extends Thread {
 class SubtractingThreadWithLock extends Thread {
 
     private final Lock lock;
+
+    private final Condition condition;
     private final List<Integer> integers;
     private final Random random = new Random();
 
 
-    public SubtractingThreadWithLock(Lock lock, List<Integer> integers) {
+    public SubtractingThreadWithLock(Lock lock, Condition condition, List<Integer> integers) {
         this.lock = lock;
+        this.condition = condition;
         this.integers = integers;
     }
 
     @Override
     public void run() {
-        for (int i = 0; i < 10000; ++i) {
+        for (int i = 0; i < 10000; ) {
             lock.lock();
             try {
-                synchronized (integers) {
-                    if (integers.isEmpty()) {
-                        try {
-                            integers.wait();
-                        } finally {
-                            lock.unlock();
-                        }
-                    }
-                    integers.remove(random.nextInt(integers.size()));
+                if (!integers.isEmpty()) {
+                    int index = random.nextInt(integers.size());
+                    integers.remove(index);
                     System.out.println("D" + i);
+                    ++i;
+                } else {
+                    condition.await();
                 }
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
@@ -81,9 +83,9 @@ public class Task8Test {
     public void eighthTask() {
         List<Integer> integers = new ArrayList<>();
         Lock lock = new ReentrantLock();
-
-        AddingThreadWithLock addingThread = new AddingThreadWithLock(lock, integers);
-        SubtractingThreadWithLock subtractingThread = new SubtractingThreadWithLock(lock, integers);
+        Condition condition = lock.newCondition();
+        AddingThreadWithLock addingThread = new AddingThreadWithLock(lock, condition, integers);
+        SubtractingThreadWithLock subtractingThread = new SubtractingThreadWithLock(lock, condition, integers);
         addingThread.start();
         subtractingThread.start();
         try {
