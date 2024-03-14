@@ -5,16 +5,18 @@ import java.util.Date;
 
 
 public class Formatter {
-    private SimpleDateFormat dateFormat;
+
+    private ThreadLocal<SimpleDateFormat> dateFormatThreadLocal;
 
     public Formatter(String pattern) {
         if (pattern == null) {
             pattern = "dd.MM.yyyy - HH:mm:ss";
         }
-        dateFormat = new SimpleDateFormat(pattern);
+        String finalPattern = pattern;
+        dateFormatThreadLocal = ThreadLocal.withInitial(() -> new SimpleDateFormat(finalPattern));
     }
 
-    public String format(Date date) {
-        return dateFormat.format(date);
+    public String  format(Date date) {
+        return dateFormatThreadLocal.get().format(date);
     }
 }

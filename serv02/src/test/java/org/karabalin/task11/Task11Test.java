@@ -2,7 +2,10 @@ package org.karabalin.task11;
 
 import org.junit.Test;
 
+import java.util.Calendar;
 import java.util.Date;
+
+import static java.lang.Thread.sleep;
 
 class DateThread extends Thread {
     private Formatter formatter;
@@ -26,11 +29,11 @@ public class Task11Test {
     public void eleventhTask() {
         Formatter formatter = new Formatter("dd.MM.yyyy :: HH:mm:ss");
 
-        Thread thread1 = new DateThread(formatter, new Date(1, 1, 1));
-        Thread thread2 = new DateThread(formatter, new Date(2, 2, 2));
-        Thread thread3 = new DateThread(formatter, new Date(3, 3, 3));
-        Thread thread4 = new DateThread(formatter, new Date(4, 4, 4));
-        Thread thread5 = new DateThread(formatter, new Date(5, 5, 5));
+        Thread thread1 = new DateThread(formatter, new Date(1, Calendar.JANUARY, 1));
+        Thread thread2 = new DateThread(formatter, new Date(2, Calendar.FEBRUARY, 2));
+        Thread thread3 = new DateThread(formatter, new Date(3, Calendar.MARCH, 3));
+        Thread thread4 = new DateThread(formatter, new Date(4, Calendar.APRIL, 4));
+        Thread thread5 = new DateThread(formatter, new Date(5, Calendar.MAY, 5));
 
         thread1.start();
         thread2.start();

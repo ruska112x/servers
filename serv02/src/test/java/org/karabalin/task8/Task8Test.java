@@ -27,8 +27,11 @@ class AddingThreadWithLock extends Thread {
         for (int i = 0; i < 10000; ++i) {
             lock.lock();
             try {
-                integers.add(random.nextInt());
-                System.out.println("A" + i);
+                synchronized (integers) {
+                    System.out.println("A" + i);
+                    integers.add(random.nextInt());
+                    integers.notify();
+                }
             } finally {
                 lock.unlock();
             }
@@ -50,15 +53,22 @@ class SubtractingThreadWithLock extends Thread {
 
     @Override
     public void run() {
-        for (int i = 0; i < 10000; ) {
+        for (int i = 0; i < 10000; ++i) {
             lock.lock();
             try {
-                if (!integers.isEmpty()) {
-                    int index = random.nextInt(integers.size());
-                    integers.remove(index);
+                synchronized (integers) {
+                    if (integers.isEmpty()) {
+                        try {
+                            integers.wait();
+                        } finally {
+                            lock.unlock();
+                        }
+                    }
+                    integers.remove(random.nextInt(integers.size()));
                     System.out.println("D" + i);
-                    ++i;
                 }
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             } finally {
                 lock.unlock();
             }
