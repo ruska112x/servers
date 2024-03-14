@@ -5,8 +5,6 @@ import org.junit.Test;
 import java.util.Calendar;
 import java.util.Date;
 
-import static java.lang.Thread.sleep;
-
 class DateThread extends Thread {
     private Formatter formatter;
 
@@ -28,6 +26,11 @@ public class Task11Test {
     @Test
     public void eleventhTask() {
         Formatter formatter = new Formatter("dd.MM.yyyy :: HH:mm:ss");
+//        int n = 5;
+//        ExecutorService executorService = Executors.newFixedThreadPool(n);
+//        for (int i = 1; i <= n; ++i) {
+//            executorService.execute(new DateThread(formatter, new Date(i, i - 1, i)));
+//        }
 
         Thread thread1 = new DateThread(formatter, new Date(1, Calendar.JANUARY, 1));
         Thread thread2 = new DateThread(formatter, new Date(2, Calendar.FEBRUARY, 2));

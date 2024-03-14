@@ -61,14 +61,13 @@ class SubtractingThreadWithLock extends Thread {
         for (int i = 0; i < 10000; ) {
             lock.lock();
             try {
-                if (!integers.isEmpty()) {
-                    int index = random.nextInt(integers.size());
-                    integers.remove(index);
-                    System.out.println("D" + i);
-                    ++i;
-                } else {
+                if (integers.isEmpty()) {
                     condition.await();
                 }
+                int index = random.nextInt(integers.size());
+                integers.remove(index);
+                System.out.println("D" + i);
+                ++i;
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             } finally {
