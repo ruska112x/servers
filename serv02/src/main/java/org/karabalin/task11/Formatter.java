@@ -16,7 +16,7 @@ public class Formatter {
         dateFormatThreadLocal = ThreadLocal.withInitial(() -> new SimpleDateFormat(finalPattern));
     }
 
-    public String  format(Date date) {
+    public String format(Date date) {
         return dateFormatThreadLocal.get().format(date);
     }
 }

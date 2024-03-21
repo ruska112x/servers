@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>org.karabalin</groupId>
-	<artifactId>serv03</artifactId>
+	<artifactId>serv-third</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>serv3</name>
 	<description>Demo project for Spring Boot</description>
